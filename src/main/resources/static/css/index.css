@@ -1,5 +1,5 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #f0f0f0;
 }
 .sidebar {
     background-color: #7295d0;
@@ -23,5 +23,82 @@ body {
     padding: 20px;
 }
 .card {
+    margin-bottom: 20px;
+}
+#sendemail {
+    color: white;
+}
+
+.calendar {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.calendar th, .calendar td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+.calendar th {
+    background-color: #f2f2f2;
+}
+.calendar .today {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#employeeList .list-group-item {
+    cursor: pointer;
+}
+
+#employeeDetails {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+}
+
+#employeeDetails h3 {
+    margin-bottom: 20px;
+}
+
+
+.tab-content {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+}
+
+#departmentList, #positionList {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+}
+#attendanceForm, #holidayRequestForm, #approvalHistory {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+}
+
+#approvalList .approval-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+#employeeList .list-group-item {
+    cursor: pointer;
+}
+
+#salaryDetails {
+    border: 1px solid #ddd;
+    padding: 20px;
+    background-color: #fff;
+}
+
+#salaryDetails h3 {
     margin-bottom: 20px;
 }
