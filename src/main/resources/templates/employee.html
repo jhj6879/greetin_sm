@@ -34,13 +34,73 @@
     </div>
     <div class="row">
         <div class="col-4">
-            <ul id="employeeList" class="list-group">
+            <table id="employeeList" class="list-group">
                 <!-- 사원 이름 목록이 여기에 동적으로 추가됨 -->
-            </ul>
+                <tr>
+                    <th>사번</th>
+                    <th>이름</th>
+                    <th>입사일</th>
+                </tr>
+                <tr th:each="dto: ${list}">
+                    <td th:text="${dto.employee_id}"></td>
+                    <td th:text="${dto.name}"></td>
+                    <td th:text="${dto.hire_date}"></td>
+                </tr>
+            </table>
         </div>
         <div class="col-8">
             <div id="employeeDetails">
                 <!-- 사원 인적 정보가 여기에 동적으로 표시됨 -->
+                <table>
+                    <tr>
+                        <th>사번</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>이름</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>연락처</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>성별</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>부서</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>직책</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>입사일</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>퇴사일</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>재직여부</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>관리자 여부</th>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
