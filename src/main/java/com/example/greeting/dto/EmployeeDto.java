@@ -1,4 +1,4 @@
-package com.example.greeting.employee.dto;
+package com.example.greeting.dto;
 
 import lombok.*;
 
@@ -9,9 +9,10 @@ import lombok.*;
 @ToString
 public class EmployeeDto {
     private String user_id;
-    private String password;
+    private String user_pw;
     private int employee_id;
-    private String name;
+    private String user_name;
+    private int r_num;
     private String tel;
     private String address;
     private String email;

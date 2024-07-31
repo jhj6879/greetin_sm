@@ -1,4 +1,4 @@
-package com.example.greeting.notice.dto;
+package com.example.greeting.dto;
 
 import lombok.*;
 
@@ -13,7 +13,7 @@ public class NoticeDto {
     private String title;
     private String content;
     private String create_date;
-    private String Update_date;
+    private String update_date;
     private String user_id;
     private int hit_cnt;
 }

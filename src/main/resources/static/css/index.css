@@ -102,3 +102,7 @@ body {
 #salaryDetails h3 {
     margin-bottom: 20px;
 }
+
+.joinButton {
+    margin:20px;
+}
