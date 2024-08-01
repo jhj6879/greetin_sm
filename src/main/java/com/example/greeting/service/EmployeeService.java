@@ -18,4 +18,10 @@ public class EmployeeService {
         this.employeeDao.insertEmployee(dto);
         return dto;
     }
+
+    public EmployeeDto getMemberInfo(String user_id) {
+        EmployeeDto dto = new EmployeeDto();
+        dto = employeeDao.getByUserId(user_id);
+        return dto;
+    }
 }

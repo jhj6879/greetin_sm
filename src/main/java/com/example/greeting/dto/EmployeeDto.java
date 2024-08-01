@@ -12,7 +12,7 @@ public class EmployeeDto {
     private String user_pw;
     private int employee_id;
     private String user_name;
-    private int r_num;
+    private String r_num;
     private String tel;
     private String address;
     private String email;

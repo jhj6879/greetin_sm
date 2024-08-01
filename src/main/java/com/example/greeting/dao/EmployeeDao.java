@@ -3,12 +3,18 @@ package com.example.greeting.dao;
 import com.example.greeting.dto.EmployeeDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.query.Param;
 
 @Mapper
 public interface EmployeeDao {
 
-    @Insert("insert into employee (user_id, user_pw, employee_id, user_name, r_num, tel, address, email, gender, department, position, hire_date, resignation_date, employment, permit) "
-            + "values (#{user_id}, #{user_pw}, #{employee_id}, #{user_name}, #{r_num}, #{tel}, #{address}, #{email}, #{gender}, #{department}, #{position}, null, null, null, null)")
+    @Insert("insert into employee (user_id, user_pw, employee_id, user_name, r_num, tel, address, email, gender, department, position) "
+            + "values (#{user_id}, #{user_pw}, #{employee_id}, #{user_name}, #{r_num}, #{tel}, #{address}, #{email}, #{gender}, #{department}, #{position})")
     public boolean insertEmployee(EmployeeDto dto) throws DataAccessException;
+
+    // 로그인은 security로 해서 위에 수식과 조금 다름 (회원정보 요청할때도 사용함)  // 메서드랑 클래스는 하나에 하나의 기능만
+    @Select("select * from employee where user_id=#{user_id}")
+    public EmployeeDto getByUserId(@Param("user_id") String user_id) throws DataAccessException;
 }

@@ -3,12 +3,16 @@ package com.example.greeting.controller;
 import com.example.greeting.dto.EmployeeDto;
 import com.example.greeting.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-@RequiredArgsConstructor
+import java.security.Principal;
+
+
 @Controller
 public class EmployeeController {
 
@@ -29,10 +33,24 @@ public class EmployeeController {
         return "position";
     }
 
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @GetMapping("/login")
-    public String Login(){
+    public String loginPage() {
         return "login";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/index")
+    public ModelAndView getMemberInfo(Principal principal) {
+        ModelAndView mav = new ModelAndView("index");
+        EmployeeDto dto = employeeService.getMemberInfo(principal.getName());
+        mav.addObject("index", dto);
+        return mav;
+    }
+
     @GetMapping("/join")
     public String JoinPage(){
         return "join";
