@@ -1,9 +1,31 @@
-////아이디체크
-//function checkId() {
-//	let url = "confirmId.jsp?u_id=" + inputForm.u_id.value;
-//    open(url, "confirmId", "width=300, height=200, toolbar=no, location=no, status=no, menubar=no, scrollbars=no, resizable=no");
-//}
+//아이디체크
+function checkId() {
+	var snd_data = $("#user_id").val();
+	$.ajax(
+		{
+			type: "get",
+			dataType: "text",
+			async: true, //true : 비동기방식 - 페이지 갱신 X
+			url: "http://localhost:8080/checkid",
+			data: { data: snd_data }, //뷰에서 서버로 넘어가는 데이터
+			success: function(data, textStatus) {
+				if (data == "true") {
+					$("#id-area").html("<p>사용 가능한 아이디입니다.</p>");
+				} else {
+					$("#id-area").html("<p>사용할 수 없는 아이디입니다.</p>");
+				}
 
+			},
+			error: function(data, textStatus) {
+				window.alert("에러가 발생했습니다.");
+				window.alert(textStatus);
+			},
+			complete: function(data, textStatus) {
+				//window.alert("작업을 완료했습니다.");
+			}
+		}
+	);
+}
 
 function checkFormjoin() {
     // 유효성 검사

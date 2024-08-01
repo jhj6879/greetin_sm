@@ -3,6 +3,7 @@ package com.example.greeting.service;
 import com.example.greeting.dao.EmployeeDao;
 import com.example.greeting.dto.EmployeeDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,18 @@ public class EmployeeService {
         return dto;
     }
 
-    public EmployeeDto getMemberInfo(String user_id) {
-        EmployeeDto dto = new EmployeeDto();
-        dto = employeeDao.getByUserId(user_id);
-        return dto;
+    public boolean memberId(String user_id) {
+        boolean result = false;
+        if(employeeDao.checkId(user_id) == 0) {
+            result = true;
+        }
+        return result;
     }
+
+
+//	public boolean checkLogin(String user_id, String user_pw) {
+//		boolean result = false;
+//		if (employeeDao.checkMember(user_id, user_pw)) result = true;
+//		return result;
+//	}
 }

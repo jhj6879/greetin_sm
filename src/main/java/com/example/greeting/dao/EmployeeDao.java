@@ -14,7 +14,10 @@ public interface EmployeeDao {
             + "values (#{user_id}, #{user_pw}, #{employee_id}, #{user_name}, #{r_num}, #{tel}, #{address}, #{email}, #{gender}, #{department}, #{position})")
     public boolean insertEmployee(EmployeeDto dto) throws DataAccessException;
 
-    // 로그인은 security로 해서 위에 수식과 조금 다름 (회원정보 요청할때도 사용함)  // 메서드랑 클래스는 하나에 하나의 기능만
-    @Select("select * from employee where user_id=#{user_id}")
-    public EmployeeDto getByUserId(@Param("user_id") String user_id) throws DataAccessException;
+    @Select("select count(*) from employee where user_id=#{user_id}")
+    public int checkId(@Param("user_id") String user_id) throws DataAccessException;
+
+//    @Select("select count(*) from employee where userid=#{user_id} and user_pw=#{user_pw}")
+//    public boolean checkMember(@Param("user_id") String user_id, @Param("user_pw") String user_pw) throws DataAccessException;
+
 }
