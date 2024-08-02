@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
@@ -42,18 +42,6 @@ public class EmployeeController {
     public String loginPage() {
         return "login";
     }
-
-    // 로그인 후 홈화면 이동
-//    @PostMapping("/login")
-//    public String LoginInfo(@RequestParam (value="user_id") String user_id,
-//                            @RequestParam (value="user_pw") String user_pw) {
-//        //서비스에게 요청
-//        if(employeeService.checkLogin(user_id, user_pw)) {
-//            return "index";
-//        }
-//        return "login";
-//    }
-
 
     // 회원가입 페이지
     @GetMapping("/join")

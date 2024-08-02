@@ -12,10 +12,10 @@ public interface EmployeeDao {
 
     @Insert("insert into employee (user_id, user_pw, employee_id, user_name, r_num, tel, address, email, gender, department, position) "
             + "values (#{user_id}, #{user_pw}, #{employee_id}, #{user_name}, #{r_num}, #{tel}, #{address}, #{email}, #{gender}, #{department}, #{position})")
-    public boolean insertEmployee(EmployeeDto dto) throws DataAccessException;
+    boolean insertEmployee(EmployeeDto dto) throws DataAccessException;
 
     @Select("select count(*) from employee where user_id=#{user_id}")
-    public int checkId(@Param("user_id") String user_id) throws DataAccessException;
+    int checkId(@Param("user_id") String user_id) throws DataAccessException;
 
 //    @Select("select count(*) from employee where userid=#{user_id} and user_pw=#{user_pw}")
 //    public boolean checkMember(@Param("user_id") String user_id, @Param("user_pw") String user_pw) throws DataAccessException;

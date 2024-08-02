@@ -28,10 +28,4 @@ public class EmployeeService {
         return result;
     }
 
-
-//	public boolean checkLogin(String user_id, String user_pw) {
-//		boolean result = false;
-//		if (employeeDao.checkMember(user_id, user_pw)) result = true;
-//		return result;
-//	}
 }
