@@ -15,20 +15,23 @@ import java.security.Principal;
 @Controller
 public class IndexController {
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @GetMapping("/")
     public String Home(){
         return "/index";
     }
 
-//    @GetMapping("/index")
-//    public ModelAndView getMemberInfo(Principal principal) { //세션에 기록된 userid를 가져옴
-//        ModelAndView mav = new ModelAndView("index"); //모델과 뷰를 한꺼번에 제어하는 클래스 1)뷰를 넘겨줌
-//        EmployeeDto dto = new EmployeeDto();
-//        dto = employeeService.getMemberInfo(principal.getName());
-//        mav.addObject("index", dto);
-//
-//        return mav;
-//    }
+    @GetMapping("/index")
+    public ModelAndView getMemberInfo(Principal principal) { //세션에 기록된 userid를 가져옴
+        ModelAndView mav = new ModelAndView("index"); //모델과 뷰를 한꺼번에 제어하는 클래스 1)뷰를 넘겨줌
+        EmployeeDto dto = new EmployeeDto();
+        dto = employeeService.getMemberInfo(principal.getName());
+        mav.addObject("index", dto);
+
+        return mav;
+    }
 
     @GetMapping("/email")
     public String Email(){
@@ -45,17 +48,7 @@ public class IndexController {
         return "calendar";
     }
 
-    @GetMapping("/notice")
-    public String Notice(Model model, @PathVariable("post_no") int post_no){
-//        List<NoticeDto> list = service.getNoticeList(post_no);
-//        model.addAttribute("list", list);
-        return "notice";
-    }
 
-    @GetMapping("/write")
-    public String Wriet(){
-        return "write";
-    }
 
     @GetMapping("/attendance")
     public String Attendance(){

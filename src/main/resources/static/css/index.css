@@ -29,6 +29,10 @@ body {
     color: white;
 }
 
+#write {
+    color: white;
+}
+
 .calendar {
     width: 100%;
     max-width: 900px;
@@ -105,4 +109,28 @@ body {
 
 .joinButton {
     margin:20px;
+}
+
+/*페이징 CSS 설정*/
+.page{
+	display: flex;
+}
+.page li{
+	list-style: none;
+	margin: 10px;
+}
+.page_link_bold{
+	font-weight: bold;
+}
+.page_link{
+	font-weight: normal;
+}
+.page li a {
+	color: blue;
+	text-decoration: none;
+}
+
+.page li a:hover {
+	color: blue;
+	font-weight: bolder;
 }

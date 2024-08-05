@@ -22,6 +22,6 @@ public class EmployeeDto {
     private String hire_date;
     private String resignation_date;
     private String employment;
-    private String permit;
+    private int permit;
 
 }

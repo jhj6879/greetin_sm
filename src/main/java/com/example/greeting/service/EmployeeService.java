@@ -28,4 +28,10 @@ public class EmployeeService {
         return result;
     }
 
+    public EmployeeDto getMemberInfo(String userid) {
+        EmployeeDto dto = new EmployeeDto();
+        dto = employeeDao.getByUserId(userid);
+        return dto;
+    }
+
 }
