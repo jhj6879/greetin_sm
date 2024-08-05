@@ -10,7 +10,7 @@ import lombok.*;
 public class PostDto {
 
     private int post_no;
-    private String  title;
+    private String title;
     private String content;
     private String create_date;
     private String update_date;
