@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,64 +43,70 @@
                 </tr>
                 <tr th:each="dto: ${list}">
                     <td th:text="${dto.employee_id}"></td>
-                    <td th:text="${dto.name}"></td>
+                    <td th:text="${dto.user_name}"></td>
                     <td th:text="${dto.hire_date}"></td>
                 </tr>
             </table>
         </div>
         <div class="col-8">
             <div id="employeeDetails">
+                <form name="emp" action="emp" method="post">
                 <!-- 사원 인적 정보가 여기에 동적으로 표시됨 -->
-                <table>
-                    <tr>
-                        <th>사번</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>이름</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>연락처</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>주소</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>이메일</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>성별</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>부서</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>직책</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>입사일</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>퇴사일</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>재직여부</th>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <th>관리자 여부</th>
-                        <td></td>
-                    </tr>
-                </table>
+<!--                <table>-->
+<!--                    <tr>-->
+<!--                        <th>사번</th>-->
+<!--                        <td th:text="${dto.employee_id}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>이름</th>-->
+<!--                        <td th:text="${dto.user_name}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>주민등록번호</th>-->
+<!--                        <td th:text="${dto.r_num}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>연락처</th>-->
+<!--                        <td th:text="${dto.telnum}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>주소</th>-->
+<!--                        <td th:text="${dto.address}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>이메일</th>-->
+<!--                        <td th:text="${dto.email}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>성별</th>-->
+<!--                        <td th:text="${dto.gender}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>부서</th>-->
+<!--                        <td th:text="${dto.department}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>직책</th>-->
+<!--                        <td th:text="${dto.position}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>입사일</th>-->
+<!--                        <td th:text="${dto.hire_date}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>퇴사일</th>-->
+<!--                        <td th:text="${dto.resignation_date}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>재직여부</th>-->
+<!--                        <td th:text="${dto.employment}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <th>관리자 여부</th>-->
+<!--                        <td th:text="${dto.permit}"></td>-->
+<!--                    </tr>-->
+<!--                </table>-->
+                </form>
             </div>
         </div>
     </div>

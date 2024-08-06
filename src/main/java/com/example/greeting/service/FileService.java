@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class FileService {
-
     @Autowired
     private FileDao fileDao;
 
@@ -27,6 +26,4 @@ public class FileService {
     public FileDto fileDownload(int file_id) {
         return fileDao.selectFileById(file_id);
     }
-
-
 }

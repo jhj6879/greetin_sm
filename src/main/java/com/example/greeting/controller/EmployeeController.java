@@ -1,11 +1,13 @@
 package com.example.greeting.controller;
 
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.PostDto;
 import com.example.greeting.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class EmployeeController {
@@ -21,7 +25,9 @@ public class EmployeeController {
 
     // 사원관리
     @GetMapping("/employee")
-    public String Employee(){
+    public String Employee(Model model){
+        List<EmployeeDto> list = employeeService.selectEmployeeList();
+        model.addAttribute("list", list);
         return "employee";
     }
 

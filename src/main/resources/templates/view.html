@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/index.css" rel="stylesheet">
+</head>
+<body>
+<div class="sidebar">
+  <div class="text-center mb-4">
+    <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
+  </div>
+  <a href="/">Home</a>
+  <a href="/notice">Notice</a>
+  <a href="/email">Email</a>
+  <a href="/calendar">Calendar</a>
+  <a href="/employee">Employee</a>
+  <a href="/department">Department</a>
+  <a href="/position">Position</a>
+  <a href="/attendance">Attendance</a>
+  <a href="/salary">Salary</a>
+  <a href="/login">Login</a>
+</div>
+
+<div class="content">
+  <h1 class="mb-4">공지사항</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">공지사항</h5>
+        </div>
+        <form name="view">
+          <table>
+            <tr>
+              <td>글 제목</td>
+              <td th:text="${post.title}"></td>
+            </tr>
+            <tr>
+              <td>작성자</td>
+              <td th:text="${post.user_id}"></td>
+            </tr>
+            <tr>
+              <td>내용</td>
+              <td><textarea name="content" th:text="${post.content}" readonly></textarea></td>
+            </tr>
+            <tr>
+              <td>첨부파일</td>
+              <td>
+                <p th:if="${file != null}" th:each="file : ${file_list}">
+                  <a th:text="${file.org_file_name}" th:href="@{'/download/' + ${file.file_id}}"></a>
+                </p>
+              </td>
+            </tr>
+          </table>
+<!--          <span th:if="${#authentication.name == post.user_id}">-->
+          <input type="button" value="글 수정" th:onclick="|location.href='/edit/' + ${post.post_no}|">
+          <input type="button" value="글 삭제" th:onclick="|location.href='/delete/' + ${post.post_no}|">
+<!--		</span>-->
+          <a href="/notice"><input type="button" value="글 목록"></a>
+        </form>
+        <br>
+        <form th:action="@{/reply}" method="post">
+          <table>
+            <tr>
+<!--            <tr sec:authorize="isAuthenticated()">-->
+              <th>댓글</th>
+              <td>
+                <input type="text" name="comment">
+                <input type="hidden" name="post_no" th:value="${post.post_no}">
+                <input type="hidden" name="user_id" th:value="${#authentication.name}">
+              </td>
+              <td><input type="submit" value="입력"></td>
+            </tr>
+            <tr th:each="reply: ${reply_list}">
+              <td th:text="${reply.user_id}"></td>
+              <td th:text="${reply.comment}"></td>
+              <td th:text="${reply.create_date}"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/css/js/post.js"></script>
+</body>
+</html>

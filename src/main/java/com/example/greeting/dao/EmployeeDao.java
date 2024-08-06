@@ -1,11 +1,14 @@
 package com.example.greeting.dao;
 
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.PostDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 @Mapper
 public interface EmployeeDao {
@@ -21,4 +24,6 @@ public interface EmployeeDao {
     @Select("select * from employee where user_id=#{user_id}")
     public EmployeeDto getByUserId(@Param("user_id") String user_id) throws DataAccessException;
 
+    @Select("select employee_id, user_name, hire_date from employee ")
+    List<EmployeeDto> selectEmployeeList() throws DataAccessException;
 }

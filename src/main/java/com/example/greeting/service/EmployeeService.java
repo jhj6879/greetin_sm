@@ -2,10 +2,13 @@ package com.example.greeting.service;
 
 import com.example.greeting.dao.EmployeeDao;
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -34,4 +37,7 @@ public class EmployeeService {
         return dto;
     }
 
+    public List<EmployeeDto> selectEmployeeList() {
+        return employeeDao.selectEmployeeList();
+    }
 }

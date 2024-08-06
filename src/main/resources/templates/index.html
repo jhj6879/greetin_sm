@@ -15,7 +15,6 @@
     </div>
     <a href="/">Home</a>
     <a href="/notice">Notice</a>
-    <a href="/notice">Notice</a>
     <a href="/email">Email</a>
     <a href="/calendar">Calendar</a>
     <a href="/employee">Employee</a>
@@ -33,7 +32,31 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">공지사항</h5>
-                    <p class="card-text">여기에 공지사항 내용을 입력하세요.</p>
+                    <a class="right" href="/notice">>더보기</a>
+                    <p class="card-text">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">작성자</th>
+                            <th scope="col">작성일</th>
+                            <th scope="col">조회수</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dto : ${list}">
+                            <td th:text="${dto.post_no}"></td>
+                            <td>
+                                <a th:text="${dto.title}" th:onclick="|location.href='/view/' + ${dto.post_no}|"></a>
+                            </td>
+                            <td th:text="${dto.user_id}"></td>
+                            <td th:text="${dto.create_date}"></td>
+                            <td th:text="${dto.hit_cnt}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </p>
                 </div>
             </div>
         </div>

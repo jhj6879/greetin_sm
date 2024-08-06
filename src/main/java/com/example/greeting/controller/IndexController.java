@@ -2,7 +2,10 @@ package com.example.greeting.controller;
 
 //import com.example.greeting.employee.service.EmployeeService;
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.PostDto;
 import com.example.greeting.service.EmployeeService;
+import com.example.greeting.service.FileService;
+import com.example.greeting.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,15 +14,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class IndexController {
 
     @Autowired
+    private PostService postService;
+    @Autowired
+    private FileService fileService;
+    @Autowired
     private EmployeeService employeeService;
 
     @GetMapping("/")
-    public String Home(){
+    public String Home(Model model){
+        List<PostDto> list = postService.selectRecentPosts();
+        model.addAttribute("list", list);
         return "/index";
     }
 

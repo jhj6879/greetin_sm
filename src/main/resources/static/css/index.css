@@ -134,3 +134,7 @@ body {
 	color: blue;
 	font-weight: bolder;
 }
+
+.right {
+    text-align: right;
+}

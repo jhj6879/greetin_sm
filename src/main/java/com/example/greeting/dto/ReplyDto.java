@@ -7,13 +7,12 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class NoticeDto {
+public class ReplyDto {
 
+    private int reply_no;
     private int post_no;
-    private String title;
-    private String content;
+    private String  user_id;
+    private String comment;
     private String create_date;
     private String update_date;
-    private String user_id;
-    private int hit_cnt;
 }
