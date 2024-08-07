@@ -40,4 +40,19 @@ public class EmployeeService {
     public List<EmployeeDto> selectEmployeeList() {
         return employeeDao.selectEmployeeList();
     }
+
+    public EmployeeDto selectEmployee(int employee_id) {
+        return employeeDao.selectEmployee(employee_id);
+    }
+
+    public void updateEmployee(EmployeeDto dto) {
+        if (dto.getHire_date() != null && dto.getHire_date().trim().isEmpty()) {
+            dto.setHire_date(null);
+        }
+        if (dto.getResignation_date() != null && dto.getResignation_date().trim().isEmpty()) {
+            dto.setResignation_date(null);
+        }
+        employeeDao.updateEmployee(dto);
+    }
+
 }

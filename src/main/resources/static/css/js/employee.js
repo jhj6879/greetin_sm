@@ -1,11 +1,27 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const employees = [
-        { id: 1, name: '김철수', department: '개발팀', position: '팀장', email: 'chulsoo@example.com', phone: '010-1234-5678' },
-        { id: 2, name: '이영희', department: '마케팅팀', position: '사원', email: 'younghee@example.com', phone: '010-9876-5432' },
-        // 더 많은 사원 데이터를 추가할 수 있습니다.
-    ];
+$(document).ready(function() {
+    $('#employeeList tr').click(function() {
+        var employeeId = $(this).find('td:first').text();
+        $.ajax({
+            url: '/employee/' + employeeId,
+            method: 'GET',
+            success: function(data) {
+                $('#employeeDetails').html(data);
+            },
+            error: function(err) {
+                console.error(err);
+            }
+        });
+    });
+});
 
-    const employeeList = document.getElementById('employeeList');
+document.addEventListener('DOMContentLoaded', function () {
+//    const employees = [
+//        { id: 1, name: '김철수', department: '개발팀', position: '팀장', email: 'chulsoo@example.com', phone: '010-1234-5678' },
+//        { id: 2, name: '이영희', department: '마케팅팀', position: '사원', email: 'younghee@example.com', phone: '010-9876-5432' },
+//        // 더 많은 사원 데이터를 추가할 수 있습니다.
+//    ];
+
+    const employees = document.getElementById('employeeList');
     const employeeDetails = document.getElementById('employeeDetails');
     const employeeSearch = document.getElementById('employeeSearch');
 
@@ -40,10 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
         displayEmployeeList(filteredEmployees);
     });
 
-    document.getElementById('addEmployeeBtn').addEventListener('click', () => {
-        // 사원 등록 버튼 클릭 시 동작
-    });
 
-    // 초기 사원 목록 표시
-    displayEmployeeList(employees);
 });
+
+function upEmployee() {
+    const form = document.getElementById('employeeDetailsForm');
+
+    if (form) {
+        window.alert("수정이 완료되었습니다.");
+        form.submit(); // 서버 연동
+    } else {
+        window.alert("폼을 찾을 수 없습니다.");
+    }
+}

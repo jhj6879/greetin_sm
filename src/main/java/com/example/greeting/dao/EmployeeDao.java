@@ -5,6 +5,7 @@ import com.example.greeting.dto.PostDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.repository.query.Param;
 
@@ -26,4 +27,16 @@ public interface EmployeeDao {
 
     @Select("select employee_id, user_name, hire_date from employee ")
     List<EmployeeDto> selectEmployeeList() throws DataAccessException;
+
+    @Select("select employee_id, user_name, r_num, tel, address, email, gender," +
+            " department, position, hire_date, resignation_date, employment, permit" +
+            " from employee where employee_id = #{employee_id}")
+    EmployeeDto selectEmployee(@Param("employee_id") int employee_id) throws DataAccessException;
+
+    @Update("UPDATE employee SET user_name = #{user_name}, r_num = #{r_num}, tel = #{tel}, " +
+            "address = #{address}, email = #{email}, gender = #{gender}, department = #{department}, " +
+            "position = #{position}, hire_date = #{hire_date}, resignation_date = #{resignation_date}, " +
+            "employment = #{employment}, permit = #{permit} WHERE employee_id = #{employee_id}")
+    void updateEmployee(EmployeeDto dto);
+
 }
