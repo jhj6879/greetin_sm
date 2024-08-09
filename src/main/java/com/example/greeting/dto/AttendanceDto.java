@@ -26,5 +26,9 @@ public class AttendanceDto {
     private Double early_leave_time; // 조퇴 시간
 
     private LocalDate work_date;  // 날짜 필드 추가
-    private LocalDate attendance_date;  // 날짜 필드 추가
+    private String attendance_date;  // 날짜 필드 추가
+
+    public int getWorkingHours() {
+        return 0;
+    }
 }

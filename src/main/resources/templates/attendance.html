@@ -31,26 +31,27 @@
       <div class="right">
         <label for="workDate">근무일자: </label>
         <input type="date" id="workDate" name="workDate">
-        <button id="searchButton" class="button">검색</button>
+        <button id="searchButton" class="buttonAtt">검색</button>
       </div>
     </div>
 
     <div class="attendance-section">
       <h3>일일근태관리</h3>
-      <div class="tabs">
-        <button class="tab-button active" onclick="openTab(event, 'individual')">사원개별</button>
-        <button class="tab-button" onclick="openTab(event, 'group')">사원전체</button>
-      </div>
+<!--      <div class="tabs">-->
+<!--        <button class="tab-button active" onclick="openTab(event, 'individual')">사원개별</button>-->
+<!--        <button class="tab-button" onclick="openTab(event, 'group')">사원전체</button>-->
+<!--      </div>-->
 
       <div id="individual" class="tab-content active">
-        <p class="info-text">
-          * 출퇴근시간은 입장, 외근, 지각,조퇴시간이 개시되지 않은 경우 당일만 수정이 가능합니다.<br>
-        </p>
+<!--        <p class="info-text">-->
+<!--          * 출퇴근시간은 입장, 외근, 지각,조퇴시간이 개시되지 않은 경우 당일만 수정이 가능합니다.<br>-->
+<!--        </p>-->
         <table class="attendance-table">
           <thead>
           <tr>
             <th>사원번호</th>
             <th>사원이름</th>
+            <th>날짜</th>
             <th>출근시간</th>
             <th>퇴근시간</th>
             <th>근무시간</th>
@@ -64,12 +65,13 @@
           <tr th:each="dto : ${list}">
             <td th:text="${dto.employee_id}"></td>
             <td th:text="${dto.user_name}"></td>
+            <td th:text="${dto.attendance_date}"></td>
             <td th:text="${dto.start_time}"></td>
             <td th:text="${dto.end_time}"></td>
-            <td th:text="${dto.working_hours}"></td>
-            <td th:text="${dto.over_time}"></td>
-            <td th:text="${dto.latency_time}"></td>
-            <td th:text="${dto.early_leave_time}"></td>
+            <td th:text="${dto.working_hours} + 시간"></td>
+            <td th:text="${dto.over_time} + 시간"></td>
+            <td th:text="${dto.latency_time} + 시간"></td>
+            <td th:text="${dto.early_leave_time} + 시간"></td>
             <td th:text="${dto.holi_day}"></td>
           </tr>
           </tbody>

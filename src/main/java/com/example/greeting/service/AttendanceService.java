@@ -15,8 +15,6 @@ public class AttendanceService {
     @Autowired
     private AttendanceDao attendanceDao;
 
-
-
     public AttendanceDto getTime(String user_id) {
         return attendanceDao.getTime(user_id);
     }
@@ -31,13 +29,12 @@ public class AttendanceService {
 
     // 출근 처리
     public void save(AttendanceDto att) {
-        attendanceDao.save(att);
+        attendanceDao.saveOrUpdate(att);
     }
 
     // 퇴근 및 휴일 처리
     public void recordClockOutOrHoliday(AttendanceDto att) throws DataAccessException {
         attendanceDao.updateAttendance(att);
     }
-
 
 }

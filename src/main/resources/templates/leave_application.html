@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>휴가 신청</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .card {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+        }
+        .form-group input[type="button"] {
+            width: auto;
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .form-group input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h4 class="card-title">휴가 신청</h4>
+    <form>
+      <div class="form-group">
+        <label for="applicant">신청자</label>
+        <input type="text" id="applicant" value="TEST1" readonly>
+      </div>
+      <div class="form-group">
+        <label for="organization">소속</label>
+        <input type="text" id="organization" value="테스트조직1" readonly>
+      </div>
+      <div class="form-group">
+        <label for="leave-type">휴가구분</label>
+        <select id="leave-type">
+          <option value="annual">연차휴가</option>
+          <option value="sick">병가</option>
+          <option value="maternity">출산휴가</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="start-date">시작일자</label>
+        <input type="date" id="start-date">
+      </div>
+      <div class="form-group">
+        <label for="end-date">종료일자</label>
+        <input type="date" id="end-date">
+      </div>
+      <div class="form-group">
+        <label for="leave-reason">휴가사유</label>
+        <textarea id="leave-reason" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="approver-name">승인결재자명</label>
+        <input type="text" id="approver-name" required>
+      </div>
+      <div class="form-group">
+        <label for="approver-organization">소속</label>
+        <input type="text" id="approver-organization" required>
+      </div>
+      <div class="form-group text-right">
+        <input type="button" value="저장" onclick="submitForm()">
+        <input type="button" value="목록" onclick="goBack()">
+      </div>
+    </form>
+  </div>
+</div>
+<script>
+    function submitForm() {
+        // Form submission logic here
+        alert("휴가 신청이 저장되었습니다.");
+    }
+
+    function goBack() {
+        // Redirect back to list
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>

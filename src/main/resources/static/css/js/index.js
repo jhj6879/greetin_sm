@@ -1,40 +1,3 @@
-//function recordTime(action) {
-//        const currentTime = new Date().toISOString();
-//        console.log("Recording time for action:", action, "at", currentTime); // 로깅 추가
-//        fetch('/record-time', {
-//            method: 'POST',
-//            headers: {
-//                'Content-Type': 'application/json'
-//            },
-//            body: JSON.stringify({ action: action, time: currentTime })
-//        })
-//        .then(response => {
-//            console.log("Response status:", response.status); // 로깅 추가
-//            return response.json();
-//        })
-//        .then(data => {
-//            console.log("Response data:", data); // 로깅 추가
-//            if (action === 'clockIn') {
-//                const clockInElement = document.getElementById('clockInTime');
-//                if (clockInElement) {
-//                    clockInElement.innerText = currentTime;
-//                } else {
-//                    console.error("clockInTime element not found");
-//                }
-//            } else if (action === 'clockOut') {
-//                const clockOutElement = document.getElementById('clockOutTime');
-//                if (clockOutElement) {
-//                    clockOutElement.innerText = currentTime;
-//                } else {
-//                    console.error("clockOutTime element not found");
-//                }
-//            }
-//        })
-//        .catch(error => {
-//            console.error('Error:', error);
-//        });
-//    }
-
 function formatDateToMysql(datetime) {
     const date = new Date(datetime);
     const year = date.getFullYear();
@@ -69,7 +32,6 @@ function recordTime(action) {
         console.error('Error:', error);
     });
 }
-
 
 
 

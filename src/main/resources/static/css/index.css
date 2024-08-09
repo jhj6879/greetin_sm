@@ -34,6 +34,10 @@ body {
     color: white;
 }
 
+#vacation {
+    color: white;
+}
+
 .calendar {
     width: 100%;
     max-width: 900px;
@@ -150,6 +154,19 @@ body {
     cursor: pointer;
     font-size: 15px;
     color: white;
+    text-align: center;
+}
+
+.buttonAtt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    color: block;
     text-align: center;
 }
 

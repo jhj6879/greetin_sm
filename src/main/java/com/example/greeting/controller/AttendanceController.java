@@ -56,11 +56,12 @@ public class AttendanceController {
             // MySQL 형식을 LocalDateTime으로 변환하기 위한 포매터
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime parsedTime = LocalDateTime.parse(request.getTime(), formatter);
-
             // 다시 MySQL 형식으로 변환
             String formattedTime = parsedTime.format(formatter);
 
+            att.setAttendance_date(String.valueOf(parsedTime.toLocalDate()));
 
+            // 출근/퇴근 시간 설정
             if (request.getAction().equals("clockIn")) {
                 att.setStart_time(request.getTime());
             } else if (request.getAction().equals("clockOut")) {
@@ -68,7 +69,12 @@ public class AttendanceController {
             }
 
             // 출근/퇴근 시간 저장
-            attendanceService.save(att);
+            if (request.getAction().equals("clockIn")) {
+                attendanceService.save(att);
+            }else if (request.getAction().equals("clockOut")) {
+                attendanceService.recordClockOutOrHoliday(att);
+            }
+
             return ResponseEntity.ok("{\"message\": \"Time recorded successfully\"}");
         } catch (Exception e) {
             e.printStackTrace();
@@ -87,8 +93,18 @@ public class AttendanceController {
             list = attendanceService.getAllAttendanceList(); // 모든 데이터를 가져오는 메서드
         }
         model.addAttribute("list", list);
+
+        // 예를 들어, DAO에서 가져온 결과를 처리할 때
+        AttendanceDto attendanceDto = new AttendanceDto();
+        int workingHours = attendanceDto.getWorkingHours(); // DB에서 가져온 정수 값
+        String workingHoursStr = workingHours + "시간"; // Java에서 "시간" 단위 추가
+
         return "attendance";
     }
 
+    @GetMapping("/leave_application")
+    public String LeaveAppli(){
+        return "leave_application";
+    }
 
 }
