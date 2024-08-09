@@ -33,14 +33,15 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                        .requestMatchers(new AntPathRequestMatcher("/**"))
-                        .permitAll())
+                        .requestMatchers(new AntPathRequestMatcher("/record-time")).authenticated()
+                        .anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
                 .logout((logout) -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/").invalidateHttpSession(true));
         return http.build();
     }
+
 
     // 암호 알고리즘 설정해주는 과정 어떤 객체를 주입시킬지 결정
     @Bean
@@ -53,6 +54,4 @@ public class SecurityConfig {
 //    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 //        return authenticationConfiguration.getAuthenticationManager();
 //    }
-
-
 }

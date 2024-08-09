@@ -36,6 +36,9 @@ public class PostController {
     @Autowired
     private FileService fileService;
 
+    // 공지사항은 유저는 보기만 가능하게 하고 글 작성하는것과 삭제하는것은 불가능하게 막는다.
+    // 유저는 공지사항 보기 댓글 작성 까지만
+
     @GetMapping("/write")
     public String Wriet(){
         return "write";

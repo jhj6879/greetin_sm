@@ -25,6 +25,7 @@ body {
 .card {
     margin-bottom: 20px;
 }
+
 #sendemail {
     color: white;
 }
@@ -137,4 +138,63 @@ body {
 
 .right {
     text-align: right;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    color: white;
+    text-align: center;
+}
+
+#clockIn {
+    background-color: #7DA3F5;
+}
+
+#clockOut {
+    background-color: #93D9E3;
+}
+
+#out {
+    background-color: #F5B7B1;
+}
+
+#return {
+    background-color: #F5D0A9;
+}
+
+/* 테이블 스타일 */
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0; /* 표와 다른 요소 간의 간격 추가 */
+}
+
+/* 테이블 헤더 스타일 */
+.attendance-table th, .attendance-table td {
+    border: 1px solid #ddd; /* 테두리(눈금) 추가 */
+    padding: 8px; /* 셀 내부 간격 */
+    text-align: center; /* 중앙 정렬 */
+}
+
+/* 테이블 헤더 배경색 */
+.attendance-table th {
+    background-color: #f2f2f2; /* 헤더의 배경색 설정 */
+    font-weight: bold; /* 헤더 텍스트 굵게 */
+}
+
+/* 테이블 본문 스타일 */
+.attendance-table td {
+    vertical-align: middle; /* 텍스트의 수직 중앙 정렬 */
+}
+
+/* 전체 표에 배경색 설정 */
+.attendance-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행의 배경색 */
 }

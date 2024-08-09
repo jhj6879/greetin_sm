@@ -37,6 +37,9 @@ public interface EmployeeDao {
             "address = #{address}, email = #{email}, gender = #{gender}, department = #{department}, " +
             "position = #{position}, hire_date = #{hire_date}, resignation_date = #{resignation_date}, " +
             "employment = #{employment}, permit = #{permit} WHERE employee_id = #{employee_id}")
-    void updateEmployee(EmployeeDto dto);
+    void updateEmployee(EmployeeDto dto) throws DataAccessException;
+
+    @Select("SELECT user_id, user_name, department, position FROM employee WHERE user_id = #{user_id}")
+    EmployeeDto findEmployeeById(String user_id);
 
 }

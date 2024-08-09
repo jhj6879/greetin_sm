@@ -1,8 +1,10 @@
 package com.example.greeting.controller;
 
 //import com.example.greeting.employee.service.EmployeeService;
+import com.example.greeting.dto.AttendanceDto;
 import com.example.greeting.dto.EmployeeDto;
 import com.example.greeting.dto.PostDto;
+import com.example.greeting.service.AttendanceService;
 import com.example.greeting.service.EmployeeService;
 import com.example.greeting.service.FileService;
 import com.example.greeting.service.PostService;
@@ -25,6 +27,8 @@ public class IndexController {
     private FileService fileService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private AttendanceService attendanceService;
 
     @GetMapping("/")
     public String Home(Model model){
@@ -34,15 +38,19 @@ public class IndexController {
     }
 
     @GetMapping("/index")
-    public ModelAndView getMemberInfo(Principal principal) { //세션에 기록된 userid를 가져옴
-        ModelAndView mav = new ModelAndView("index"); //모델과 뷰를 한꺼번에 제어하는 클래스 1)뷰를 넘겨줌
-        EmployeeDto dto = new EmployeeDto();
-        dto = employeeService.getMemberInfo(principal.getName());
-        mav.addObject("index", dto);
+    public ModelAndView getMemberInfo(Principal principal) {
+        ModelAndView mav = new ModelAndView("index");
+
+        EmployeeDto employeeDto = employeeService.getMemberInfo(principal.getName());
+        mav.addObject("employee", employeeDto);
+
+        AttendanceDto attendanceDto = attendanceService.getTime(principal.getName());
+        mav.addObject("attendance", attendanceDto);
 
         return mav;
     }
 
+    // 관리자 유저 모두 사용
     @GetMapping("/email")
     public String Email(){
         return "email";
@@ -53,18 +61,14 @@ public class IndexController {
         return "sendemail";
     }
 
+    // 관지라 유저 모두 사용 (추후 시간 가능하면)
     @GetMapping("/calendar")
     public String Calendar(){
         return "calendar";
     }
 
-
-
-    @GetMapping("/attendance")
-    public String Attendance(){
-        return "attendance";
-    }
-
+    // 관리자는 모든 직원 급여 관리
+    // 유저는 자신의 급여 한달치 조회 가능하게
     @GetMapping("/salary")
     public String Salary(){
         return "salary";

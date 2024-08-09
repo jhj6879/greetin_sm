@@ -20,7 +20,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    // 사원관리
+    // 사원관리(관리자용)
     @GetMapping("/employee")
     public String Employee(Model model){
         List<EmployeeDto> list = employeeService.selectEmployeeList();
@@ -47,13 +47,13 @@ public class EmployeeController {
         return "redirect:/employee";
     }
 
-    // 부서관리
+    // 부서관리 (삭제 예정)
     @GetMapping("/department")
     public String Department(){
         return "department";
     }
 
-    // 직책관리
+    // 직책관리 (삭제 예정)
     @GetMapping("/position")
     public String Position(){
         return "position";

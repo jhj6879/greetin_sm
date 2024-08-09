@@ -55,4 +55,10 @@ public class EmployeeService {
         employeeDao.updateEmployee(dto);
     }
 
+    public EmployeeDto getEmployeeById(String userId) {
+//        String user_id = employeeDao.findUserIdByUserName(userName);
+//        System.out.println("Found userId: " + user_id + " for userName: " + user_name);
+        return employeeDao.findEmployeeById(userId);
+    }
+
 }

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>근태 관리</title>
+  <title>홈화면</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="css/index.css" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="sidebar">
@@ -26,48 +25,61 @@
 </div>
 
 <div class="content">
-  <h1 class="mb-4">근태 관리</h1>
+  <div class="card">
+    <div class="header">
+      <h1>근태관리</h1>
+      <div class="right">
+        <label for="workDate">근무일자: </label>
+        <input type="date" id="workDate" name="workDate">
+        <button id="searchButton" class="button">검색</button>
+      </div>
+    </div>
 
-  <div id="attendanceForm" class="mb-4">
-    <h2>출근 / 퇴근 시간 기록</h2>
-    <form>
-      <div class="mb-3">
-        <label for="clockInTime" class="form-label">출근 시간</label>
-        <input type="time" id="clockInTime" class="form-control">
+    <div class="attendance-section">
+      <h3>일일근태관리</h3>
+      <div class="tabs">
+        <button class="tab-button active" onclick="openTab(event, 'individual')">사원개별</button>
+        <button class="tab-button" onclick="openTab(event, 'group')">사원전체</button>
       </div>
-      <div class="mb-3">
-        <label for="clockOutTime" class="form-label">퇴근 시간</label>
-        <input type="time" id="clockOutTime" class="form-control">
-      </div>
-      <button type="button" class="btn btn-primary" id="submitAttendance">기록 저장</button>
-    </form>
-  </div>
 
-  <div id="holidayRequestForm" class="mb-4">
-    <h2>휴일 결재 신청</h2>
-    <form>
-      <div class="mb-3">
-        <label for="holidayDate" class="form-label">휴일 날짜</label>
-        <input type="date" id="holidayDate" class="form-control">
+      <div id="individual" class="tab-content active">
+        <p class="info-text">
+          * 출퇴근시간은 입장, 외근, 지각,조퇴시간이 개시되지 않은 경우 당일만 수정이 가능합니다.<br>
+        </p>
+        <table class="attendance-table">
+          <thead>
+          <tr>
+            <th>사원번호</th>
+            <th>사원이름</th>
+            <th>출근시간</th>
+            <th>퇴근시간</th>
+            <th>근무시간</th>
+            <th>연장근로</th>
+            <th>지각시간</th>
+            <th>조퇴시간</th>
+            <th>휴가</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="dto : ${list}">
+            <td th:text="${dto.employee_id}"></td>
+            <td th:text="${dto.user_name}"></td>
+            <td th:text="${dto.start_time}"></td>
+            <td th:text="${dto.end_time}"></td>
+            <td th:text="${dto.working_hours}"></td>
+            <td th:text="${dto.over_time}"></td>
+            <td th:text="${dto.latency_time}"></td>
+            <td th:text="${dto.early_leave_time}"></td>
+            <td th:text="${dto.holi_day}"></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="mb-3">
-        <label for="holidayReason" class="form-label">사유</label>
-        <textarea id="holidayReason" class="form-control" rows="3"></textarea>
-      </div>
-      <button type="button" class="btn btn-primary" id="submitHolidayRequest">결재 올리기</button>
-    </form>
-  </div>
-
-  <div id="approvalHistory" class="mb-4">
-    <h2>결재 내역</h2>
-    <input type="month" id="historyMonth" class="form-control mb-4">
-    <div id="approvalList">
-      <!-- 결재 내역 목록이 여기에 동적으로 추가됨 -->
     </div>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/attendance.js"></script>
+<script src="css/js/attendance.js"></script>
 </body>
 </html>
