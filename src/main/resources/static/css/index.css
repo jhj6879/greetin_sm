@@ -215,3 +215,24 @@ body {
 .attendance-table tr:nth-child(even) {
     background-color: #f9f9f9; /* 짝수 행의 배경색 */
 }
+
+.form-group label {
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+        }
+        .form-group input[type="button"] {
+            width: auto;
+            background-color: #007bff;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .form-group input[type="button"]:hover {
+            background-color: #0056b3;
+        }
