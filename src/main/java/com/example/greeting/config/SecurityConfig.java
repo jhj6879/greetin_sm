@@ -26,7 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity(prePostEnabled = true)  // MemberController에서 @PreAuthorize 어노테이션 사용할거면 추가해야함
+@EnableMethodSecurity(prePostEnabled = true)  // MemberController에서 @PreAuthorize 어노테이션 사용할거면 추가해야함
 public class SecurityConfig {
 
     @Bean
@@ -49,9 +49,9 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // 권한 관리하는 기능
-//    @Bean
-//    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-//        return authenticationConfiguration.getAuthenticationManager();
-//    }
+    //권한 관리하는 기능
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }

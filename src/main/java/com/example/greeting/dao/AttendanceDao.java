@@ -2,6 +2,8 @@ package com.example.greeting.dao;
 
 import com.example.greeting.dto.AttendanceDto;
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.LeaveDto;
+import com.example.greeting.dto.PostDto;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -76,4 +78,25 @@ public interface AttendanceDao {
             "GROUP BY employee_id, user_name, attendance_date;\n")
     List<AttendanceDto> getAllAttList() throws DataAccessException;
 
+    @Select("SELECT e.employee_id, e.user_name, " +
+            "CASE " +
+            "WHEN e.department = '10' THEN '재정관리팀' " +
+            "WHEN e.department = '20' THEN '인사관리팀' " +
+            "WHEN e.department = '30' THEN '영업팀' " +
+            "WHEN e.department = '40' THEN '품질보증팀' " +
+            "ELSE 'Unknown Department' " +
+            "END AS department, " +
+            "l.holi_day, l.start_day, l.end_day, l.leave_reason " +
+            "FROM `leave` l " +
+            "JOIN employee e ON l.employee_id = e.employee_id " +
+            "WHERE e.employee_id = #{employee_id}")
+    LeaveDto selectEmployee(@Param("employee_id") int employee_id) throws DataAccessException;
+
+    @Insert("INSERT INTO `leave` (leave_id, employee_id, user_name, department, holi_day, start_day, end_day, leave_reason) " +
+            "VALUES (#{leave_id}, #{employee_id}, #{user_name}, #{department}, #{holi_day}, #{start_day}, #{end_day}, #{leave_reason})")
+    void insertLeave(LeaveDto leaveDto);
+
+    // 최근 휴가계획 5개 조회
+    @Select("SELECT * FROM `leave` ORDER BY leave_id DESC LIMIT 5")
+    List<LeaveDto> selectRecentPosts() throws DataAccessException;
 }

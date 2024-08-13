@@ -12,16 +12,15 @@
     <div class="text-center mb-4">
         <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
     </div>
-    <a href="/">Home</a>
-    <a href="/notice">Notice</a>
-    <a href="/email">Email</a>
-    <a href="/calendar">Calendar</a>
-    <a href="/employee">Employee</a>
-    <a href="/department">Department</a>
-    <a href="/position">Position</a>
-    <a href="/attendance">Attendance</a>
-    <a href="/salary">Salary</a>
-    <a href="/login">Login</a>
+    <a href="/"><li>Home</li></a>
+    <a href="/notice"><li>Notice</li></a>
+    <a href="/email"><li>Email</li></a>
+    <a href="/calendar"><li>Calendar</li></a>
+    <a href="/attendance"><li>Attendance</li></a>
+    <a href="/salary"><li>Salary</li></a>
+    <a href="/employee" ><li>Employee</li></a>
+    <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
+    <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
 </div>
 
 <div class="content">
@@ -83,7 +82,33 @@
                     <button class="btn btn-primary">
                         <a id="vacation" href="leave_application">휴가신청</a>
                     </button>
-                    <!--휴가 리스트 추가-->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">번호</th>
+                            <th scope="col">신청자</th>
+                            <th scope="col">휴가 시작일</th>
+                            <th scope="col">휴가 끝일</th>
+                            <th scope="col">부서명</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="list : ${leaveList}">
+                            <td th:text="${list.leave_id}"></td>
+                            <td th:text="${list.user_name}"></td>
+                            <td th:text="${list.start_day}"></td>
+                            <td th:text="${list.end_day}"></td>
+                            <td>
+                                <select id="department" name="department" class="form-control" disabled>
+                                    <option value="10" th:selected="${list.department == '10'}">재정관리팀</option>
+                                    <option value="20" th:selected="${list.department == '20'}">인사관리팀</option>
+                                    <option value="30" th:selected="${list.department == '30'}">영업팀</option>
+                                    <option value="40" th:selected="${list.department == '40'}">품질보증팀</option>
+                                </select>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

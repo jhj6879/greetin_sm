@@ -61,4 +61,14 @@ public class EmployeeService {
         return employeeDao.findEmployeeById(userId);
     }
 
+    public EmployeeDto getEmployeeId(String userId) {
+        EmployeeDto employeeDto = employeeDao.findEmployeeId(userId);
+        if (employeeDto == null) {
+            System.out.println("No employee found with userId: " + userId);
+        } else {
+            System.out.println("Employee found: " + employeeDto);
+        }
+        return employeeDto;
+    }
+
 }

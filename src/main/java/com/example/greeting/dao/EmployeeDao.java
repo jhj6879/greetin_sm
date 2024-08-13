@@ -42,4 +42,8 @@ public interface EmployeeDao {
     @Select("SELECT user_id, user_name, department, position FROM employee WHERE user_id = #{user_id}")
     EmployeeDto findEmployeeById(String user_id);
 
+    @Select("SELECT employee_id, user_name, department FROM employee WHERE user_id = #{userId}")
+    EmployeeDto findEmployeeId(@Param("userId") String userId);
+
+
 }

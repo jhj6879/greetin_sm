@@ -3,6 +3,7 @@ package com.example.greeting.controller;
 //import com.example.greeting.employee.service.EmployeeService;
 import com.example.greeting.dto.AttendanceDto;
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.LeaveDto;
 import com.example.greeting.dto.PostDto;
 import com.example.greeting.service.AttendanceService;
 import com.example.greeting.service.EmployeeService;
@@ -34,8 +35,18 @@ public class IndexController {
     public String Home(Model model){
         List<PostDto> list = postService.selectRecentPosts();
         model.addAttribute("list", list);
+
+        List<LeaveDto> leaveList = attendanceService.selectRecentPosts();
+        model.addAttribute("leaveList", leaveList);
         return "/index";
     }
+
+//    @GetMapping("/")
+//    public String HomeLeave(Model model){
+//        List<LeaveDto> leaveList = attendanceService.selectRecentPosts();
+//        model.addAttribute("list", leaveList);
+//        return "/index";
+//    }
 
     @GetMapping("/index")
     public ModelAndView getMemberInfo(Principal principal) {

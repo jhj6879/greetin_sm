@@ -12,16 +12,15 @@
   <div class="text-center mb-4">
     <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
   </div>
-  <a href="/">Home</a>
-  <a href="/notice">Notice</a>
-  <a href="/email">Email</a>
-  <a href="/calendar">Calendar</a>
-  <a href="/employee">Employee</a>
-  <a href="/department">Department</a>
-  <a href="/position">Position</a>
-  <a href="/attendance">Attendance</a>
-  <a href="/salary">Salary</a>
-  <a href="/login">Login</a>
+  <a href="/"><li>Home</li></a>
+  <a href="/notice"><li>Notice</li></a>
+  <a href="/email"><li>Email</li></a>
+  <a href="/calendar"><li>Calendar</li></a>
+  <a href="/attendance"><li>Attendance</li></a>
+  <a href="/salary"><li>Salary</li></a>
+  <a href="/employee" ><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Employee</li></a>
+  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
+  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
 </div>
 
 <div class="content">

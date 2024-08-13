@@ -3,17 +3,17 @@ package com.example.greeting.controller;
 import com.example.greeting.dto.AttendanceDto;
 import com.example.greeting.dto.AttendanceRequest;
 import com.example.greeting.dto.EmployeeDto;
+import com.example.greeting.dto.LeaveDto;
 import com.example.greeting.service.AttendanceService;
 import com.example.greeting.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -103,8 +103,42 @@ public class AttendanceController {
     }
 
     @GetMapping("/leave_application")
-    public String LeaveAppli(){
-        return "leave_application";
+    public String LeaveAppli(Model model) {
+        // 현재 로그인한 사용자의 정보를 가져옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();  // 로그인한 사용자의 user_id 가져오기
+        System.out.println("User ID from authentication: " + userId);
+
+        // user_id를 통해 employee_id와 관련 정보를 조회
+        EmployeeDto employeeDto = employeeService.getEmployeeId(userId);
+
+        if (employeeDto != null) {
+            System.out.println("Fetched Employee ID: " + employeeDto.getEmployee_id());
+            // LeaveDto 객체 생성 및 필요한 정보 설정
+            LeaveDto dto = new LeaveDto();
+            dto.setEmployee_id(employeeDto.getEmployee_id());
+            dto.setUser_name(employeeDto.getUser_name());  // 유저 이름 설정
+            dto.setDepartment(employeeDto.getDepartment());  // 부서 설정
+            // 나머지 필드는 null 상태로 유지
+
+
+            model.addAttribute("dto", dto);
+        } else {
+            // 오류 처리: EmployeeDto가 null인 경우
+            model.addAttribute("error", "Employee information not found");
+        }
+
+        return "leave_application";  // leave_application.html 템플릿 렌더링
     }
+
+
+    @PostMapping("/applyLeave")
+    public String applyLeave(@ModelAttribute LeaveDto leaveDto) {
+        System.out.println("LeaveDto: " + leaveDto);
+        System.out.println("Employee ID: " + leaveDto.getEmployee_id());
+        attendanceService.applyLeave(leaveDto);
+        return "redirect:/";
+    }
+
 
 }

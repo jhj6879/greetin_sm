@@ -12,61 +12,58 @@
   <div class="text-center mb-4">
     <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
   </div>
-  <a href="/">Home</a>
-  <a href="/notice">Notice</a>
-  <a href="/email">Email</a>
-  <a href="/calendar">Calendar</a>
-  <a href="/employee">Employee</a>
-  <a href="/department">Department</a>
-  <a href="/position">Position</a>
-  <a href="/attendance">Attendance</a>
-  <a href="/salary">Salary</a>
-  <a href="/login">Login</a>
+  <a href="/"><li>Home</li></a>
+  <a href="/notice"><li>Notice</li></a>
+  <a href="/email"><li>Email</li></a>
+  <a href="/calendar"><li>Calendar</li></a>
+  <a href="/attendance"><li>Attendance</li></a>
+  <a href="/salary"><li>Salary</li></a>
+  <a href="/employee" ><li>Employee</li></a>
+  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
+  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
 </div>
 
 <div class="container">
   <div class="card">
     <h4 class="card-title">휴가 신청</h4>
-    <form>
+    <form id="leaveForm" name="leaveForm" method="post" th:action="@{/applyLeave}">
+      <input type="hidden" name="leave_id" th:value="${dto.leave_id}">
+      <input type="hidden" name="employee_id" th:value="${dto.employee_id}">
       <div class="form-group">
         <label for="applicant">신청자</label>
-        <input type="text" id="applicant" value="TEST1" readonly>
+        <input id="applicant" name="user_name" th:value="${dto.user_name}" readonly>
       </div>
       <div class="form-group">
-        <label for="organization">소속</label>
-        <input type="text" id="organization" value="테스트조직1" readonly>
+        <label>부서명</label>
+        <input type="hidden" name="department" th:value="${dto.department}">
+        <select id="department" name="department" class="form-control" disabled>
+          <option value="10" th:selected="${dto.department == '10'}">재정관리팀</option>
+          <option value="20" th:selected="${dto.department == '20'}">인사관리팀</option>
+          <option value="30" th:selected="${dto.department == '30'}">영업팀</option>
+          <option value="40" th:selected="${dto.department == '40'}">품질보증팀</option>
+        </select>
       </div>
       <div class="form-group">
-        <label for="leave-type">휴가구분</label>
-        <select id="leave-type">
-          <option value="annual">연차휴가</option>
-          <option value="sick">병가</option>
-          <option value="maternity">출산휴가</option>
+        <label for="holi_day">휴가구분</label>
+        <select id="holi_day" name="holi_day">
+          <option value="1" th:selected="${dto.holi_day == '1'}">연차휴가</option>
+          <option value="0.5" th:selected="${dto.holi_day == '0.5'}">반차휴가</option>
         </select>
       </div>
       <div class="form-group">
         <label for="start-date">시작일자</label>
-        <input type="date" id="start-date">
+        <input type="date" id="start-date" name="start_day" th:value="${dto.start_day}">
       </div>
       <div class="form-group">
         <label for="end-date">종료일자</label>
-        <input type="date" id="end-date">
+        <input type="date" id="end-date" name="end_day" th:value="${dto.end_day}">
       </div>
       <div class="form-group">
-        <label for="leave-reason">휴가사유</label>
-        <textarea id="leave-reason" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="approver-name">승인결재자명</label>
-        <input type="text" id="approver-name" required>
-      </div>
-      <div class="form-group">
-        <label for="approver-organization">소속</label>
-        <input type="text" id="approver-organization" required>
+        <label for="leave_reason">휴가사유</label>
+        <textarea id="leave_reason" name="leave_reason" rows="3" th:text="${dto.leave_reason}"></textarea>
       </div>
       <div class="form-group text-right">
-        <input type="button" value="저장" onclick="submitForm()">
-        <input type="button" value="목록" onclick="goBack()">
+        <input type="submit" value="저장">
       </div>
     </form>
   </div>
