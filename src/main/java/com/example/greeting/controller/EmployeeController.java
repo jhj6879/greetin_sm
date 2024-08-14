@@ -61,8 +61,8 @@ public class EmployeeController {
 
     // 로그인 페이지
     @GetMapping("/login")
-    public String loginPage() {
-        return "login";
+    public String login() {
+        return "login";  // src/main/resources/templates/login.html 반환
     }
 
     /*//사용자 로그인 후 회원정보 요청

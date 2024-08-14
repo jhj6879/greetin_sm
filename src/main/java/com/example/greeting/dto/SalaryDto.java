@@ -2,6 +2,8 @@ package com.example.greeting.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,4 +23,10 @@ public class SalaryDto {
     private String  national_pension;
     private String  health_insurance;
     private String  employ_insurance;
+
+    private LocalDate payment_date; // 새로 추가
+
+    private String tot_salary;
+    private String tot_tribute;
+    private String real_number;
 }

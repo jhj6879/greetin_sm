@@ -78,12 +78,5 @@ public class IndexController {
         return "calendar";
     }
 
-    // 관리자는 모든 직원 급여 관리
-    // 유저는 자신의 급여 한달치 조회 가능하게
-    @GetMapping("/salary")
-    public String Salary(){
-        return "salary";
-    }
-
 
 }
