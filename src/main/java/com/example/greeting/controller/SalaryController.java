@@ -32,26 +32,38 @@ public class SalaryController {
             return "redirect:/salary";
         }
 
+        // 월별 급여 데이터를 생성
+        salaryService.generateMonthlySalaryData(year, month);
+
+        // 생성된 데이터를 조회
         List<SalaryDto> list = salaryService.getSalaryList(month, year);
         model.addAttribute("list", list);
+
+        // 기본적으로 첫 번째 사원의 급여 표시
+        if (!list.isEmpty()) {
+            SalaryDto dto = salaryService.calculateSalary(list.get(0).getEmployee_id(), year, month);
+            model.addAttribute("dto", dto);
+        }else {
+            // 빈 객체를 모델에 추가하여 템플릿에서 오류가 발생하지 않도록 처리
+            model.addAttribute("dto", new SalaryDto());
+        }
 
         return "salary";
     }
 
     // 클릭한 사원에 대한 상세한 급여 명세서 조회
     @GetMapping("/salary/{employee_id}")
-    public String getEmployeeDetails(@PathVariable int employee_id, Model model) {
-        // 사원의 근태 정보 기반으로 급여 계산
-        SalaryDto salary = salaryService.calculateSalary(employee_id);
-
-        if (salary == null) {
-            salary = new SalaryDto(); // 빈 객체를 생성하여 null 방지
+    public String getEmployeeDetails(@PathVariable int employee_id,
+                                     @RequestParam("year") int year,
+                                     @RequestParam("month") int month,
+                                     Model model) {
+        try {
+            SalaryDto salary = salaryService.calculateSalary(employee_id, year, month);
+            model.addAttribute("dto", salary);
+            return "salary :: salaryDetailsFragment";  // 프래그먼트를 반환
+        } catch (Exception e) {
+            e.printStackTrace();  // 서버 로그에 예외 출력
+            return "error";  // 오류가 발생한 경우 오류 페이지 반환
         }
-
-        model.addAttribute("salary", salary);
-        return "salary :: salaryDetailsFragment";
     }
-
-
-
 }

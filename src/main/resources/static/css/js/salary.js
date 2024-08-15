@@ -1,67 +1,25 @@
-//document.addEventListener('DOMContentLoaded', function () {
-//    const userRole = localStorage.getItem('userRole');
-//
-//    const userSalary = document.getElementById('userSalary');
-//    const adminSalary = document.getElementById('adminSalary');
-//
-//    const employeeList = document.getElementById('employeeList');
-//    const salaryDetails = document.getElementById('salaryDetails');
-//
-//    const employees = [
-//        { id: 1, name: '김철수', monthlySalary: 3000000 },
-//        { id: 2, name: '이영희', monthlySalary: 3200000 },
-//        // 더 많은 사원 데이터를 추가할 수 있습니다.
-//    ];
-//
-//    if (userRole === 'admin') {
-//        adminSalary.style.display = 'block';
-//        displayEmployeeList(employees);
-//    } else if (userRole === 'user') {
-//        userSalary.style.display = 'block';
-//        const user = employees.find(emp => emp.name === '김철수'); // 사용자 이름으로 검색 (예시)
-//        document.getElementById('monthlySalary').textContent = user.monthlySalary + '원';
-//        document.getElementById('annualSalary').textContent = user.monthlySalary * 12 + '원';
-//    } else {
-//        alert('잘못된 접근입니다. 다시 로그인해주세요.');
-//        window.location.href = 'login.html';
-//    }
-//
-//    function displayEmployeeList(employees) {
-//        employeeList.innerHTML = '';
-//        employees.forEach(employee => {
-//            const li = document.createElement('li');
-//            li.className = 'list-group-item';
-//            li.textContent = employee.name;
-//            li.dataset.id = employee.id;
-//            li.addEventListener('click', () => displayEmployeeDetails(employee.id));
-//            employeeList.appendChild(li);
-//        });
-//    }
-//
-//    function displayEmployeeDetails(employeeId) {
-//        const employee = employees.find(emp => emp.id === employeeId);
-//        if (employee) {
-//            salaryDetails.innerHTML = `
-//                <h3>${employee.name}</h3>
-//                <p><strong>월급:</strong> ${employee.monthlySalary}원</p>
-//                <form>
-//                    <div class="mb-3">
-//                        <label for="newMonthlySalary" class="form-label">새 월급</label>
-//                        <input type="number" id="newMonthlySalary" class="form-control" value="${employee.monthlySalary}">
-//                    </div>
-//                    <button type="button" class="btn btn-primary" onclick="updateSalary(${employee.id})">업데이트</button>
-//                </form>
-//            `;
-//        }
-//    }
-//
-//    window.updateSalary = function(employeeId) {
-//        const newMonthlySalary = document.getElementById('newMonthlySalary').value;
-//        const employee = employees.find(emp => emp.id === employeeId);
-//        if (employee) {
-//            employee.monthlySalary = newMonthlySalary;
-//            alert('월급이 업데이트되었습니다.');
-//            displayEmployeeDetails(employeeId);
-//        }
-//    }
-//});
+$(document).ready(function() {
+    // 사원 목록의 각 행을 클릭할 때 동작
+    $('#employeeSalaryList').on('click', 'tr.employee-row', function() {
+        var employeeId = $(this).data('employee-id');  // 클릭된 사원의 ID를 가져옴
+
+        // 현재 URL의 쿼리스트링에서 month와 year 값을 추출
+        var urlParams = new URLSearchParams(window.location.search);
+        var month = urlParams.get('month');  // 현재 페이지에서 조회 중인 month 값
+        var year = urlParams.get('year');    // 현재 페이지에서 조회 중인 year 값
+
+        // Ajax 요청을 통해 서버로부터 급여 명세서 정보를 받아옴
+        $.ajax({
+            url: '/salary/' + employeeId,  // 사원 ID에 맞는 URL
+            method: 'GET',
+            data: { year: year, month: month },  // 현재 페이지에서 조회 중인 연도와 달을 서버로 전달
+            success: function(data) {
+                // 서버에서 받은 명세서를 해당 컨테이너에 삽입
+                $('#salary-details-container').html(data);
+            },
+            error: function(err) {
+                console.error('급여 정보를 불러오는 중 오류가 발생했습니다.', err);
+            }
+        });
+    });
+});

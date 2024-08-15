@@ -1,6 +1,7 @@
 package com.example.greeting.service;
 
 import com.example.greeting.dao.SalaryDao;
+import com.example.greeting.dao.SalaryDaoImpl;
 import com.example.greeting.dto.AttendanceDto;
 import com.example.greeting.dto.EmployeeDto;
 import com.example.greeting.dto.SalaryDto;
@@ -19,17 +20,48 @@ public class SalaryService {
     @Autowired
     private SalaryDao salaryDao;
 
+    @Autowired
+    private SalaryDaoImpl salaryDaoImpl;  // 새로 추가된 구현 클래스
+
+
+    // 월별로 생성된 급여 리스트를 가져오는 메서드
     public List<SalaryDto> getSalaryList(int month, int year) {
         List<AttendanceDto> attendanceList = salaryDao.getSalaryList(month, year);
-//        System.out.println("Attendance List: " + attendanceList);
-        return calculateSalary(attendanceList);
+        return calculateSalaryList(attendanceList);
     }
 
-    public SalaryDto calculateSalary(int employee_id) {
-        List<AttendanceDto> attendanceList = salaryDao.findAttendanceByEmployeeId(employee_id);
-        return calculateSalaryFromAttendance(attendanceList.get(0)); // 첫 번째 출근 기록 사용
+//    public List<SalaryDto> getSalaryList(int month, int year) {
+//        List<AttendanceDto> attendanceList = salaryDao.getSalaryList(month, year);
+////        System.out.println("Attendance List: " + attendanceList);
+//        return calculateSalary(attendanceList);
+//    }
+
+//    public SalaryDto calculateSalary(int employee_id) {
+//        return salaryDao.findAttendanceByEmployeeId(employee_id);
+//    }
+
+    // 기존 메서드: 특정 사원의 급여를 조회하는 메서드
+    // 새로운 파라미터로 year와 month를 추가하여 특정 달의 급여를 조회할 수 있도록 수정
+    public SalaryDto calculateSalary(int employee_id, int year, int month) {
+        System.out.println("Calculating salary for employee_id: " + employee_id + ", year: " + year + ", month: " + month);
+
+        SalaryDto salary = salaryDao.findAttendanceByEmployeeIdAndMonth(employee_id, year, month);
+
+        if (salary == null) {
+            System.out.println("해당 월에 대한 급여 데이터가 없습니다. 사원 ID: " + employee_id + ", 연도: " + year + ", 월: " + month);
+            return new SalaryDto(); // 빈 객체 반환 또는 사용자에게 알림
+        }
+
+        return salary;
     }
 
+
+    // 월별 급여 데이터를 생성하는 메서드
+    public void generateMonthlySalaryData(int year, int month) {
+        salaryDaoImpl.generateMonthlySalaryData(year, month);  // 새로운 기능 호출
+    }
+
+    // 급여 리스트 계산
     private List<SalaryDto> calculateSalaryList(List<AttendanceDto> attendanceList) {
         List<SalaryDto> salaryList = new ArrayList<>();
 
@@ -41,6 +73,7 @@ public class SalaryService {
         return salaryList;
     }
 
+    // 급여 계산
     private SalaryDto calculateSalaryFromAttendance(AttendanceDto attendance) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

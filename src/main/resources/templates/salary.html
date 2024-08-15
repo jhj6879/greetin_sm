@@ -1,197 +1,168 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/index.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="/css/index.css" rel="stylesheet">
 </head>
 <body>
 <div class="sidebar">
-  <div class="text-center mb-4">
-    <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
-  </div>
-  <a href="/"><li>Home</li></a>
-  <a href="/notice"><li>Notice</li></a>
-  <a href="/email"><li>Email</li></a>
-  <a href="/calendar"><li>Calendar</li></a>
-  <a href="/attendance"><li>Attendance</li></a>
-  <a href="/salary"><li>Salary</li></a>
-  <a href="/employee" ><li>Employee</li></a>
-  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
-  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
+    <div class="text-center mb-4">
+        <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
+    </div>
+    <a href="/"><li>Home</li></a>
+    <a href="/notice"><li>Notice</li></a>
+    <a href="/email"><li>Email</li></a>
+    <a href="/calendar"><li>Calendar</li></a>
+    <a href="/attendance"><li>Attendance</li></a>
+    <a href="/salary"><li>Salary</li></a>
+    <a href="/employee" ><li>Employee</li></a>
+    <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
+    <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
 </div>
 
 <div class="content">
-  <h1 class="mb-4">급여 관리</h1>
+    <h1 class="mb-4">급여 관리</h1>
 
-  <form action="/salary" method="get">
-    <select name="month">
-      <option value="1">1월</option>
-      <option value="2">2월</option>
-      <option value="3">3월</option>
-      <option value="4">4월</option>
-      <option value="5">5월</option>
-      <option value="6">6월</option>
-      <option value="7">7월</option>
-      <option value="8">8월</option>
-      <option value="9">9월</option>
-      <option value="10">10월</option>
-      <option value="11">11월</option>
-      <option value="12">12월</option>
-    </select>
-    <input type="number" name="year" value="2024" min="2020" max="2030">
-    <button type="submit">조회</button>
-  </form>
-
-  <div id="adminSalary" class="mb-4">
-    <h2>사원 급여 관리</h2>
-    <div class="row">
-      <div class="col-4">
-        <ul id="employeeList" class="list-group">
-          <!-- 사원 목록이 여기에 동적으로 추가됨 -->
-          <table id="employeeSalaryList" class="list-group">
-            <tr>
-              <th>사번</th>
-              <th>이름</th>
-              <th>직책</th>
-              <th>부서명</th>
-              <th>급여 지급일</th>
-            </tr>
-            <tr th:each="dto: ${list}">
-              <td th:text="${dto.employee_id}"></td>
-              <td th:text="${dto.user_name}"></td>
-              <td>
-                <select id="position" name="position" class="form-control" disabled>
-                  <option value="10" th:selected="${dto.position == '10'}">회장</option>
-                  <option value="20" th:selected="${dto.position == '20'}">사장</option>
-                  <option value="30" th:selected="${dto.position == '30'}">이사</option>
-                  <option value="40" th:selected="${dto.position == '40'}">부장</option>
-                  <option value="50" th:selected="${dto.position == '50'}">차장</option>
-                  <option value="60" th:selected="${dto.position == '60'}">과장</option>
-                  <option value="70" th:selected="${dto.position == '70'}">대리</option>
-                  <option value="80" th:selected="${dto.position == '80'}">주임</option>
-                  <option value="90" th:selected="${dto.position == '90'}">사원</option>
-                </select>
-              </td>
-              <td>
-                <select id="department" name="department" class="form-control" disabled>
-                  <option value="10" th:selected="${dto.department == '10'}">재정관리팀</option>
-                  <option value="20" th:selected="${dto.department == '20'}">인사관리팀</option>
-                  <option value="30" th:selected="${dto.department == '30'}">영업팀</option>
-                  <option value="40" th:selected="${dto.department == '40'}">품질보증팀</option>
-                </select>
-              </td>
-              <td th:text="${dto.payment_date}"></td>
-            </tr>
-
-          </table>
-        </ul>
-      </div>
-      <div class="col-8">
-        <div id="salary-details-container">
-          <div th:fragment="salaryDetailsFragment">
-          <table class="salary-pay-slip">
-            <tr>
-              <th colspan="4" class="salary-header">급여명세서</th>
-            </tr>
-            <tr>
-              <td>사번</td>
-              <td th:text="${dto.employee_id}"></td>
-              <td>지급일</td>
-              <td th:text="${dto.payment_date}"></td>
-            </tr>
-            <tr>
-              <td>성명</td>
-              <td th:field="${dto.user_name}"></td>
-              <td>직급</td>
-              <td>
-                <select th:field="${dto.position}">
-                  <option value="10" th:selected="${dto.position == '회장'}">회장</option>
-                  <option value="20" th:selected="${dto.position == '사장'}">사장</option>
-                  <option value="30" th:selected="${dto.position == '이사'}">이사</option>
-                  <option value="40" th:selected="${dto.position == '부장'}">부장</option>
-                  <option value="50" th:selected="${dto.position == '차장'}">차장</option>
-                  <option value="60" th:selected="${dto.position == '과장'}">과장</option>
-                  <option value="70" th:selected="${dto.position == '대리'}">대리</option>
-                  <option value="80" th:selected="${dto.position == '주임'}">주임</option>
-                  <option value="90" th:selected="${dto.position == '사원'}">사원</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <th colspan="2" class="salary-section-title">급여 내역</th>
-              <th colspan="2" class="salary-section-title">공제 내역</th>
-            </tr>
-            <tr>
-              <td>기본급</td>
-              <td>2,000,000</td>
-              <td>국민연금</td>
-              <td th:text="${salary.national_pension}"></td>
-            </tr>
-            <tr>
-              <td>직책수당</td>
-              <td th:text="${salary.position_wage}"></td>
-              <td>건강보험</td>
-              <td th:text="${salary.health_insurance}"></td>
-            </tr>
-            <tr>
-              <td>초과근무수당</td>
-              <td th:text="${salary.additional_wage}"></td>
-              <td>고용보험</td>
-              <td th:text="${salary.employ_insurance}"></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>소득세</td>
-              <td th:text="${salary.income_tax}"></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td>주민세</td>
-              <td th:text="${salary.resident_tax}"></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2" class="salary-total">총 지급액</td>
-              <td colspan="2" class="salary-total">총 공제액</td>
-            </tr>
-            <tr>
-              <td colspan="2" th:text="${salary.tot_salary}"></td>
-              <td colspan="2" th:text="${salary.tot_tribute}"></td>
-            </tr>
-            <tr>
-              <td colspan="2" class="salary-total">실 수령액</td>
-              <td colspan="2" th:text="${salary.real_number}"></td>
-            </tr>
-          </table>
-
-          <p class="salary-footer">(주) 무한상사</p>
-          </div>
+    <form action="/salary" method="get">
+        <select name="month">
+            <option value="1">1월</option>
+            <option value="2">2월</option>
+            <option value="3">3월</option>
+            <option value="4">4월</option>
+            <option value="5">5월</option>
+            <option value="6">6월</option>
+            <option value="7">7월</option>
+            <option value="8">8월</option>
+            <option value="9">9월</option>
+            <option value="10">10월</option>
+            <option value="11">11월</option>
+            <option value="12">12월</option>
+        </select>
+        <input type="number" name="year" value="2024" min="2020" max="2030">
+        <button type="submit">조회</button>
+    </form>
+    <div id="adminSalary" class="mb-4">
+        <h2>사원 급여 관리</h2>
+        <div class="row">
+            <div class="col-4">
+                <ul id="employeeList" class="list-group">
+                    <!-- 사원 목록이 여기에 동적으로 추가됨 -->
+                    <table id="employeeSalaryList" class="list-group">
+                        <tr>
+                            <th>사번</th>
+                            <th>이름</th>
+                            <th>직책</th>
+                            <th>부서명</th>
+                            <th>급여 지급일</th>
+                        </tr>
+                        <!-- 사원 목록 데이터는 Thymeleaf가 동적으로 채움 -->
+                        <tr th:each="dto : ${list}" class="employee-row" th:data-employee-id="${dto.employee_id}">
+                            <td th:text="${dto.employee_id}"></td>
+                            <td th:text="${dto.user_name}"></td>
+                            <td th:text="${dto.position}"></td>
+                            <td th:text="${dto.department}"></td>
+                            <td th:text="${dto.payment_date}"></td>
+                        </tr>
+                    </table>
+                </ul>
+            </div>
+            <div class="col-8">
+                <div id="salary-details-container">
+                    <div th:fragment="salaryDetailsFragment">
+                        <form id="salaryDetailsForm", name="salaryDetails" th:action="@{/salary}">
+                            <input type="hidden" th:field="${dto.employee_id}" />
+                            <table class="salary-pay-slip">
+                            <tr>
+                                <th colspan="4" class="salary-header">급여명세서</th>
+                            </tr>
+                            <tr>
+                                <td>사번</td>
+                                <td th:text="${dto.employee_id}"></td>
+                                <td>지급일</td>
+                                <td th:text="${dto.payment_date}"></td>
+                            </tr>
+                            <tr>
+                                <td>성명</td>
+                                <td th:text="${dto.user_name}"></td>
+                                <td>직급</td>
+                                <td th:text="${dto.position}"></td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="salary-section-title">급여 내역</th>
+                                <th colspan="2" class="salary-section-title">공제 내역</th>
+                            </tr>
+                            <tr>
+                                <td>기본급</td>
+                                <td>2,000,000</td>
+                                <td>국민연금</td>
+                                <td th:text="${dto.national_pension}"></td>
+                            </tr>
+                            <tr>
+                                <td>직책수당</td>
+                                <td th:text="${dto.position_wage}"></td>
+                                <td>건강보험</td>
+                                <td th:text="${dto.health_insurance}"></td>
+                            </tr>
+                            <tr>
+                                <td>초과근무수당</td>
+                                <td th:text="${dto.additional_wage}"></td>
+                                <td>고용보험</td>
+                                <td th:text="${dto.employ_insurance}"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>소득세</td>
+                                <td th:text="${dto.income_tax}"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>주민세</td>
+                                <td th:text="${dto.resident_tax}"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="salary-total">총 지급액</td>
+                                <td colspan="2" class="salary-total">총 공제액</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" th:text="${dto.tot_salary}"></td>
+                                <td colspan="2" th:text="${dto.tot_tribute}"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="salary-total">실 수령액</td>
+                                <td colspan="2" th:text="${dto.real_number}"></td>
+                            </tr>
+                        </table>
+                        </form>
+                        <p class="salary-footer">(주) 무한상사</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
