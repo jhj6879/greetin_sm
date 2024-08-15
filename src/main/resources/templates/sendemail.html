@@ -31,7 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">이메일 작성</h5>
-                    <form>
+                    <form id="inquireForm" name="inquireForm" action="/sendemail" method="post">
                         <div class="mb-3">
                             <label for="toEmail" class="form-label">받는 사람</label>
                             <input type="email" class="form-control" id="toEmail" placeholder="이메일 주소를 입력하세요">
@@ -44,7 +44,7 @@
                             <label for="emailBody" class="form-label">내용</label>
                             <textarea class="form-control" id="emailBody" rows="5" placeholder="이메일 내용을 입력하세요"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">전송</button>
+                        <button type="submit" class="btn btn-primary" onclick="sendMail()">전송</button>
                     </form>
                 </div>
             </div>

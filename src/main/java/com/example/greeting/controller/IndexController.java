@@ -61,16 +61,7 @@ public class IndexController {
         return mav;
     }
 
-    // 관리자 유저 모두 사용
-    @GetMapping("/email")
-    public String Email(){
-        return "email";
-    }
 
-    @GetMapping("/sendemail")
-    public String Sendemail(){
-        return "sendemail";
-    }
 
     // 관지라 유저 모두 사용 (추후 시간 가능하면)
     @GetMapping("/calendar")
