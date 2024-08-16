@@ -32,16 +32,16 @@
                     <h5 class="card-title">공지사항</h5>
                     <button class="btn btn-primary"><a href="/write" id="write">공지사항 작성</a></button>
                 </div>
-<!--                <div class="search">-->
+                <div class="search">
 <!--                    <select id="searchType" name="searchType" title="검색 유형 선택">-->
 <!--                        <option value="">전체 검색</option>-->
 <!--                        <option value="title">글 제목</option>-->
 <!--                    </select>-->
-<!--                    <input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력"/>-->
-<!--                    <button type="button" class="bt_search" th:data-boardno="${post_no}" onclick="search(this)">-->
-<!--                        <i class="fas fa-search"></i><span class="skip_info">검색</span>-->
-<!--                    </button>-->
-<!--                </div>-->
+                    <input type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력"/>
+                    <button type="button" class="bt_search" onclick="search(this)">
+                        <i class="fas fa-search"></i><span class="skip_info">검색</span>
+                    </button>
+                </div>
                 <table class="table">
                     <thead>
                     <tr>
@@ -65,26 +65,26 @@
                     </tbody>
                 </table>
                 <br>
-<!--                <div>-->
-<!--                    <ul class="page">-->
-<!--                        <li th:if="${page.existPrevPage}" class="prev">-->
-<!--                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.startPage - 1}) + '?keyword=' + ${page.keyword}}">이전</a>-->
-<!--                        </li>-->
-<!--                        <li th:each="number : ${#numbers.sequence(page.startPage, page.endPage)}" class="page_item">-->
-<!--                            <a class="page_link_bold" th:if="${page.page == number}"-->
-<!--                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"-->
-<!--                               th:text="${number}">-->
-<!--                            </a>-->
-<!--                            <a class="page_link" th:if="${page.page != number}"-->
-<!--                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"-->
-<!--                               th:text="${number}">-->
-<!--                            </a>-->
-<!--                        </li>-->
-<!--                        <li th:if="${page.existNextPage}" class="next">-->
-<!--                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.endPage + 1}) + '?keyword=' + ${page.keyword}}">다음</a>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
+                <div>
+                    <ul class="page">
+                        <li th:if="${page.existPrevPage}" class="prev">
+                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.startPage - 1}) + '?keyword=' + ${page.keyword}}">이전</a>
+                        </li>
+                        <li th:each="number : ${#numbers.sequence(page.startPage, page.endPage)}" class="page_item">
+                            <a class="page_link_bold" th:if="${page.page == number}"
+                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"
+                               th:text="${number}">
+                            </a>
+                            <a class="page_link" th:if="${page.page != number}"
+                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"
+                               th:text="${number}">
+                            </a>
+                        </li>
+                        <li th:if="${page.existNextPage}" class="next">
+                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.endPage + 1}) + '?keyword=' + ${page.keyword}}">다음</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

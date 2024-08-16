@@ -12,7 +12,7 @@ function addFile(button) {
 
 // 페이징 검색기능
 function search(button){
-	var boardno = button.getAttribute('data-boardno');
-	var keyword = document.getElementById("keyword").value;
-	location.href="/board/" + boardno + "?keyword=" + keyword;
+//	var boardno = button.getAttribute('data-boardno');
+    var keyword = document.getElementById("keyword").value;
+    location.href="/notice?keyword=" + keyword;;  // 적절한 경로로 이동
 }

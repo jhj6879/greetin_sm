@@ -110,42 +110,51 @@ public class PostController {
         }
     }
 
-//    @GetMapping("/notice/{post_no}")
-//    public String notice(Model model, @PathVariable("post_no") int post_no,
-//                         @RequestParam(value="keyword", defaultValue="") String keyword) {
-//        Search search = new Search(5, 5);
-//        search.setKeyword(keyword);
-//        List<PostDto> list = postService.getPostListByBoard(post_no, search);
-//        model.addAttribute("list", list);
-//        model.addAttribute("page", search);
-//        PostDto post = postService.getBoard(post_no);
-//        model.addAttribute("post", post);
-//        return "notice";
-//    }
-//
-//    @GetMapping("/notice/{post_no}/{page}")
-//    public String boardPageWithPagination(Model model, @PathVariable("post_no") int post_no,
-//                                          @PathVariable("page") int page,
-//                                          @RequestParam(value="keyword", defaultValue="") String keyword,
-//                                          @RequestParam(value = "recordSize", defaultValue = "10") int recordSize,
-//                                          @RequestParam(value = "searchType", required = false) String searchType) {
+    // 공지사항 페이지, 검색 기능 추가
+    @GetMapping("/notice")
+    public String detailPage(Model model,
+                             @RequestParam(value="keyword", defaultValue="") String keyword) {
+        Search search = new Search(5, 5);
+
+        // 검색어를 로그로 출력하여 확인
+        System.out.println("검색어: " + keyword);
+
+        // 검색어가 있다면 해당 검색어로 검색 결과를 가져옴
+        if (!keyword.isEmpty()) {
+            search.setKeyword(keyword);
+            List<PostDto> list = postService.getPostListByKeyword(search);
+            model.addAttribute("list", list);
+        } else {
+            // 검색어가 없을 경우 전체 게시물 표시
+            List<PostDto> list = postService.getInoutNoticePage();
+            model.addAttribute("list", list);
+        }
+
+        // 페이징에 대한 것도 같이 가야함
+        model.addAttribute("page", search);
+        return "notice";
+    }
+
+//    // 페이징
+//    @GetMapping("/notice/{page}")
+//    public String boardPage(Model model, @PathVariable("page") int page,
+//                            @RequestParam(value="keyword", defaultValue="") String keyword,
+//                            @RequestParam(value = "recordSize", defaultValue = "10") int recordSize,
+//                            @RequestParam(value = "searchType", required = false) String searchType) {
 //        Search search = new Search(page, recordSize);
+//        // 검색기능 추가(키워드 파라메타가 있으면 키워드 설정)
 //        search.setKeyword(keyword);
-//        List<PostDto> list = postService.getPostListByBoard(post_no, search);
-//        int totPostCount = postService.getTotPostCount(post_no, keyword, searchType, page);
+//        search.setPage(page);
+//        search.getOffset();
+//        //게시판 리스트
+//        List<PostDto> list = postService.getInoutNotice(search);
+////        int totPostCount = postService.getTotPostCount(keyword, searchType, page);
 //        model.addAttribute("list", list);
-//        model.addAttribute("page", search);
-//        PostDto post = postService.getBoard(post_no);
-//        model.addAttribute("post", post);
+//        // 페이징에 대한 것도 같이 가야함
+//        model.addAttribute("page",search);
 //        return "notice";
 //    }
 
-    @GetMapping("/notice")
-    public String detailPage(Model model) {
-        List<PostDto> list = postService.getInoutNotice();
-        model.addAttribute("list", list);
-        return "notice";
-    }
 
     @GetMapping("/view/{post_no}")
     public String viewPost(@PathVariable("post_no") int post_no, Model model) {
@@ -227,4 +236,3 @@ public class PostController {
 
 
 }
-

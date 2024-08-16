@@ -29,19 +29,38 @@ public class PostService {
     }
 
     // 페이징 기능
-    public List<PostDto> getPostListByBoard(int post_no, Search search){
-        search.calcPage(postDao.selectPostCntByKeyword(post_no, search.getKeyword()));
+    public List<PostDto> getInoutNotice(Search search){
+        search.calcPage(postDao.selectPostCntByKeyword(search.getKeyword()));
         int offset = search.getOffset();
         int cnt = search.getRecordSize();
         String keyword = search.getKeyword();
-        return postDao.selectPostListByKeyword(post_no, offset, cnt, keyword);
+        return postDao.selectPostListByKeyword(offset, cnt, keyword);
     }
 
-    public int getTotPostCount(int post_no, String keyword) {
-        return postDao.countPosts(post_no, keyword);
+    public List<PostDto> getPostListByKeyword(Search page) {
+        // 검색된 전체 게시물 수 계산
+        int total = postDao.selectPostCntByKeyword(page.getKeyword());
+        page.calcPage(total);  // 페이징 계산
+
+        // 페이징 계산 후 게시물 목록 가져오기
+        return postDao.selectPostListByKeyword(page.getOffset(), page.getRecordSize(), page.getKeyword());
     }
 
-    public List<PostDto> getInoutNotice() {
+
+//    // 검색기능(페이징과 함침)
+//    public List<PostDto> getPostListByKeyword(Search page) {
+//        page.calcPage(postDao.selectPostCntByKeyword(page.getKeyword()));
+//        int offset = page.getOffset();
+//        int cnt = page.getRecordSize();
+//        String keyword = page.getKeyword();
+//        return postDao.selectPostListByKeyword(offset, cnt, keyword);
+//    }
+
+    public int getTotPostCount(String keyword, String searchType, int page) {
+        return postDao.countPosts(keyword, searchType, page);
+    }
+
+    public List<PostDto> getInoutNoticePage() {
         return postDao.selectNotice();
     }
 
