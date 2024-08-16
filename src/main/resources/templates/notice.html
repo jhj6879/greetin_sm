@@ -66,24 +66,24 @@
                 </table>
                 <br>
                 <div>
-                    <ul class="page">
-                        <li th:if="${page.existPrevPage}" class="prev">
-                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.startPage - 1}) + '?keyword=' + ${page.keyword}}">이전</a>
-                        </li>
-                        <li th:each="number : ${#numbers.sequence(page.startPage, page.endPage)}" class="page_item">
-                            <a class="page_link_bold" th:if="${page.page == number}"
-                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"
-                               th:text="${number}">
-                            </a>
-                            <a class="page_link" th:if="${page.page != number}"
-                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"
-                               th:text="${number}">
-                            </a>
-                        </li>
-                        <li th:if="${page.existNextPage}" class="next">
-                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.endPage + 1}) + '?keyword=' + ${page.keyword}}">다음</a>
-                        </li>
-                    </ul>
+<!--                    <ul class="page">-->
+<!--                        <li th:if="${page.existPrevPage}" class="prev">-->
+<!--                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.startPage - 1}) + '?keyword=' + ${page.keyword}}">이전</a>-->
+<!--                        </li>-->
+<!--                        <li th:each="number : ${#numbers.sequence(page.startPage, page.endPage)}" class="page_item">-->
+<!--                            <a class="page_link_bold" th:if="${page.page == number}"-->
+<!--                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"-->
+<!--                               th:text="${number}">-->
+<!--                            </a>-->
+<!--                            <a class="page_link" th:if="${page.page != number}"-->
+<!--                               th:href="@{'/notice/' + ${post_no} + '/' + ${number} + '?keyword=' + ${page.keyword}}"-->
+<!--                               th:text="${number}">-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li th:if="${page.existNextPage}" class="next">-->
+<!--                            <a class="page_link" th:href="@{'/notice/' + ${post_no} + '/' + (${page.endPage + 1}) + '?keyword=' + ${page.keyword}}">다음</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
                 </div>
             </div>
         </div>
