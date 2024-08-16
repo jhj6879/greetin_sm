@@ -1,5 +1,6 @@
 package com.example.greeting.controller;
 
+import com.example.greeting.com.Search;
 import com.example.greeting.dto.EmployeeDto;
 import com.example.greeting.dto.PostDto;
 import com.example.greeting.service.EmployeeService;
@@ -22,14 +23,42 @@ public class EmployeeController {
 
     // 사원관리(관리자용)
     @GetMapping("/employee")
-    public String Employee(Model model){
-        List<EmployeeDto> list = employeeService.selectEmployeeList();
-        model.addAttribute("list", list);
-        // 여기서는 기본적으로 첫 번째 사원을 선택해서 표시할 수 있습니다.
-        if (!list.isEmpty()) {
-            EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
-            model.addAttribute("dto", dto);
+    public String Employee(Model model, @RequestParam(value="keyword", defaultValue="") String keyword) {
+        Search search = new Search(5, 5);
+
+        // 검색어를 로그로 출력하여 확인
+        System.out.println("검색어: " + keyword);
+
+        // 검색어를 로그로 출력하여 확인
+        System.out.println("검색어: " + keyword);
+
+        // 검색어가 있다면 해당 검색어로 검색 결과를 가져옴
+        if (!keyword.isEmpty()) {
+            search.setKeyword(keyword);
+            List<EmployeeDto> list = employeeService.getPostListByKeyword(search);
+            model.addAttribute("list", list);
+            if (!list.isEmpty()) {
+                EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
+                model.addAttribute("dto", dto);
+            }
+        } else {
+            // 검색어가 없을 경우 전체 게시물 표시
+            List<EmployeeDto> list = employeeService.getInoutNoticePage();
+            model.addAttribute("list", list);
+            if (!list.isEmpty()) {
+                EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
+                model.addAttribute("dto", dto);
+            }
         }
+
+//        List<EmployeeDto> list = employeeService.selectEmployeeList();
+//        model.addAttribute("list", list);
+//        // 여기서는 기본적으로 첫 번째 사원을 선택해서 표시할 수 있습니다.
+//        if (!list.isEmpty()) {
+//            EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
+//            model.addAttribute("dto", dto);
+//        }
+
         return "employee";
     }
 

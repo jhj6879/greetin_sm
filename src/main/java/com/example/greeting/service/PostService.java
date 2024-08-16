@@ -47,6 +47,10 @@ public class PostService {
     }
 
 
+    public List<PostDto> getInoutNoticePage() {
+        return postDao.selectNotice();
+    }
+
 //    // 검색기능(페이징과 함침)
 //    public List<PostDto> getPostListByKeyword(Search page) {
 //        page.calcPage(postDao.selectPostCntByKeyword(page.getKeyword()));
@@ -60,9 +64,6 @@ public class PostService {
         return postDao.countPosts(keyword, searchType, page);
     }
 
-    public List<PostDto> getInoutNoticePage() {
-        return postDao.selectNotice();
-    }
 
     public PostDto getPost(int post_no) {
         return postDao.selectPostByPostNo(post_no);

@@ -1,5 +1,6 @@
 package com.example.greeting.service;
 
+import com.example.greeting.com.Search;
 import com.example.greeting.dao.EmployeeDao;
 import com.example.greeting.dto.EmployeeDto;
 import com.example.greeting.dto.PostDto;
@@ -39,6 +40,20 @@ public class EmployeeService {
 
     public List<EmployeeDto> selectEmployeeList() {
         return employeeDao.selectEmployeeList();
+    }
+
+    public List<EmployeeDto> getPostListByKeyword(Search page) {
+        // 검색된 전체 게시물 수 계산
+        int total = employeeDao.selectPostCntByKeyword(page.getKeyword());
+        page.calcPage(total);  // 페이징 계산
+
+        // 페이징 계산 후 게시물 목록 가져오기
+        return employeeDao.selectPostListByKeyword(page.getOffset(), page.getRecordSize(), page.getKeyword());
+    }
+
+
+    public List<EmployeeDto> getInoutNoticePage() {
+        return employeeDao.selectNotice();
     }
 
     public EmployeeDto selectEmployee(int employee_id) {

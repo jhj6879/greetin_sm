@@ -69,3 +69,10 @@ function upEmployee() {
         window.alert("폼을 찾을 수 없습니다.");
     }
 }
+
+// 검색기능
+function search(button){
+//	var boardno = button.getAttribute('data-boardno');
+    var keyword = document.getElementById("keyword").value;
+    location.href="/employee?keyword=" + keyword;;  // 적절한 경로로 이동
+}

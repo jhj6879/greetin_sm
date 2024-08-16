@@ -27,8 +27,12 @@
 <div class="content">
     <h1 class="mb-4">사원 관리</h1>
     <div class="mb-4">
-        <input type="text" id="employeeSearch" placeholder="사원 검색" class="form-control d-inline-block w-25">
-        <button class="btn btn-primary">검색</button>
+        <div class="search">
+            <input type="text" id="keyword" name="keyword" placeholder="사원 검색" class="form-control d-inline-block w-25"/>
+            <button type="button" class="bt_search" onclick="search(this)">
+                <i class="fas fa-search"></i><span class="skip_info">검색</span>
+            </button>
+        </div>
     </div>
     <div class="row">
         <div class="col-4">

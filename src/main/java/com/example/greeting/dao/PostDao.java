@@ -37,14 +37,14 @@ public interface PostDao {
             "(title LIKE CONCAT('%',#{keyword},'%') OR content LIKE CONCAT('%',#{keyword},'%'))")
     int selectPostCntByKeyword(@Param("keyword") String keyword) throws DataAccessException;
 
+    @Select("select post_no,title,user_id,create_date,hit_cnt FROM post")
+    List<PostDto> selectNotice() throws DataAccessException;
+
     /// 페이징을 위한 게시물 수 카운트
     @Select("SELECT COUNT(*) FROM post WHERE  post_no=#{post_no} and" +
             "title LIKE CONCAT('%', #{keyword}, '%')")
     int countPosts(@Param("keyword") String keyword,
                    @Param("searchType") String searchType, @Param("page") int page) throws DataAccessException;
-
-    @Select("select post_no,title,user_id,create_date,hit_cnt FROM post")
-    List<PostDto> selectNotice() throws DataAccessException;
 
     @Update("update post set hit_cnt = hit_cnt + 1 where post_no=#{post_no}")
     void updateHitCnt(@Param("post_no") int post_no) throws DataAccessException;
