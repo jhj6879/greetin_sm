@@ -19,8 +19,11 @@
   <a href="/attendance"><li>Attendance</li></a>
   <a href="/salary"><li>Salary</li></a>
   <a href="/employee" ><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Employee</li></a>
-  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
-  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
+  <!-- 로그인된 사용자는 Logout 버튼을, 그렇지 않으면 Login 버튼을 표시 -->
+  <a th:href="@{/login}" th:if="${#authorization.expression('isAnonymous()')}">Login</a>
+  <a th:href="@{/logout}" th:if="${#authorization.expression('isAuthenticated()')}">Logout</a>
+<!--  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>-->
+<!--  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>-->
 </div>
 
 <div class="content">
@@ -31,6 +34,10 @@
         <form th:action="@{/attendance}" method="get">
           <label for="yearMonth">근무 년/월: </label>
           <input type="month" id="yearMonth" name="yearMonth" th:value="${yearMonth}">
+
+          <!-- 관리자만 직원 이름으로 검색 가능 -->
+<!--          <label for="userName" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">직원 이름: </label>-->
+<!--          <input type="text" id="userName" name="userName" th:value="${userName}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">-->
 
           <label for="userName">직원 이름: </label>
           <input type="text" id="userName" name="userName" th:value="${userName}">

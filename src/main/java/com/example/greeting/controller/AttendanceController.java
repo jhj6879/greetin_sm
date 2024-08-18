@@ -82,6 +82,7 @@ public class AttendanceController {
         }
     }
 
+    // 근테 관리
     @GetMapping("/attendance")
     public String getAttendance(@RequestParam(value = "yearMonth", required = false) String yearMonth,
                                 @RequestParam(value = "userName", required = false) String userName, Model model) {
@@ -98,27 +99,6 @@ public class AttendanceController {
 
         return "attendance";
     }
-
-
-
-    // 근태관리 페이지(관리자용)
-//    @GetMapping("/attendance")
-//    public String Attendance(@RequestParam(value = "employee_id", required = false) Integer employee_id, Model model) {
-//        List<AttendanceDto> list;
-//        if (employee_id != null) {
-//            list = attendanceService.getAttendanceList(employee_id);
-//        } else {
-//            list = attendanceService.getAllAttendanceList(); // 모든 데이터를 가져오는 메서드
-//        }
-//        model.addAttribute("list", list);
-//
-//        // 예를 들어, DAO에서 가져온 결과를 처리할 때
-//        AttendanceDto attendanceDto = new AttendanceDto();
-//        int workingHours = attendanceDto.getWorkingHours(); // DB에서 가져온 정수 값
-//        String workingHoursStr = workingHours + "시간"; // Java에서 "시간" 단위 추가
-//
-//        return "attendance";
-//    }
 
     @GetMapping("/leave_application")
     public String LeaveAppli(Model model) {

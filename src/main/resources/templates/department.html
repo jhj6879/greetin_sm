@@ -28,10 +28,64 @@
     <input type="text" id="departmentSearch" placeholder="부서 검색" class="form-control mb-4">
     <div id="departmentList">
         <!-- 부서 목록이 여기에 동적으로 추가됨 -->
+        <!-- 부서 추가 폼 -->
+        <form action="/departments/add" method="post" class="mb-4">
+            <div class="form-group">
+                <label for="department">부서 코드</label>
+                <input type="text" class="form-control" id="department" name="department" required>
+            </div>
+            <div class="form-group">
+                <label for="department_name">부서 이름</label>
+                <input type="text" class="form-control" id="department_name" name="department_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2">부서 추가</button>
+        </form>
+
+        <!-- 부서 리스트 테이블 -->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>부서 코드</th>
+                <th>부서 이름</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="department : ${departmentList}">
+                <td th:text="${department.department}"></td>
+                <td th:text="${department.department_name}"></td>
+                <td>
+                    <!-- 부서 수정 버튼 -->
+                    <button class="btn btn-warning" onclick="editDepartment('${department.department}', '${department.department_name}')">수정</button>
+                </td>
+                <td>
+                    <!-- 부서 삭제 폼 -->
+                    <form action="/departments/delete" method="post">
+                        <input type="hidden" name="department" th:value="${department.department}">
+                        <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 부서 수정 폼 -->
+        <div id="editForm" style="display:none;">
+            <h2>부서 수정</h2>
+            <form action="/departments/update" method="post">
+                <input type="hidden" id="editDepartment" name="department">
+                <div class="form-group">
+                    <label for="editDepartmentName">부서 이름</label>
+                    <input type="text" class="form-control" id="editDepartmentName" name="department_name" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">수정 완료</button>
+            </form>
+        </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/department.js"></script>
+<script src="css/js/department.js"></script>
 </body>
 </html>

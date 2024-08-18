@@ -42,14 +42,36 @@ public interface SalaryDao {
 //            "AND MONTH(s.payment_date) = #{month}")
 //    SalaryDto findAttendanceByEmployeeIdAndMonth(int employee_id, int year, int month) throws DataAccessException;
 
-    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +
-            "s.position_wage, s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, " +
-            "s.employ_insurance, s.tot_salary, s.tot_tribute, s.real_number, s.payment_date " +
+//    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +
+//            "s.position_wage, s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, " +
+//            "s.employ_insurance, s.tot_salary, s.tot_tribute, s.real_number, s.payment_date " +
+//            "FROM salary s " +
+//            "WHERE s.employee_id = #{employee_id} AND YEAR(s.payment_date) = #{year} AND MONTH(s.payment_date) = #{month}")
+//    SalaryDto findAttendanceByEmployeeIdAndMonth(@Param("employee_id") int employee_id,
+//                                                 @Param("year") int year,
+//                                                 @Param("month") int month);
+
+    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, " +
+            "FORMAT(ROUND(s.daily_wage, -1), 0) AS daily_wage, " +  // 일일 급여 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.additional_wage, -1), 0) AS additional_wage, " +  // 추가 급여 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.position_wage, -1), 0) AS position_wage, " +  // 직책 수당 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.income_tax, -1), 0) AS income_tax, " +  // 소득세 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.resident_tax, -1), 0) AS resident_tax, " +  // 주민세 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.national_pension, -1), 0) AS national_pension, " +  // 국민연금 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.health_insurance, -1), 0) AS health_insurance, " +  // 건강보험 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.employ_insurance, -1), 0) AS employ_insurance, " +  // 고용보험 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.tot_salary, -1), 0) AS tot_salary, " +  // 총 급여 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.tot_tribute, -1), 0) AS tot_tribute, " +  // 총 공제액 10의 자리 반올림 및 천 단위 포맷
+            "FORMAT(ROUND(s.real_number, -1), 0) AS real_number, " +  // 실 수령액 10의 자리 반올림 및 천 단위 포맷
+            "s.payment_date " +
             "FROM salary s " +
-            "WHERE s.employee_id = #{employee_id} AND YEAR(s.payment_date) = #{year} AND MONTH(s.payment_date) = #{month}")
+            "WHERE s.employee_id = #{employee_id} " +
+            "AND YEAR(s.payment_date) = #{year} " +
+            "AND MONTH(s.payment_date) = #{month}")
     SalaryDto findAttendanceByEmployeeIdAndMonth(@Param("employee_id") int employee_id,
                                                  @Param("year") int year,
                                                  @Param("month") int month);
+
 
     @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +
             "s.position_wage, s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, " +

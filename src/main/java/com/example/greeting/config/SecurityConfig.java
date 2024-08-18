@@ -34,6 +34,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/record-time")).authenticated()
+                        .requestMatchers("/attendance").authenticated()
+                        .requestMatchers("/employee/**").hasRole("ADMIN")  // 관리자만 /employee 경로 접근 가능
                         .anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
@@ -52,6 +54,7 @@ public class SecurityConfig {
     //권한 관리하는 기능
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+
         return authenticationConfiguration.getAuthenticationManager();
     }
 }

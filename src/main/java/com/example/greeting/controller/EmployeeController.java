@@ -74,12 +74,6 @@ public class EmployeeController {
         return "redirect:/employee";
     }
 
-    // 부서관리 (삭제 예정)
-    @GetMapping("/department")
-    public String Department(){
-        return "department";
-    }
-
     // 직책관리 (삭제 예정)
     @GetMapping("/position")
     public String Position(){
