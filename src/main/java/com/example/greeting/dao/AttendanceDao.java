@@ -53,29 +53,32 @@ public interface AttendanceDao {
 
     @Select("SELECT \n" +
             "    employee_id, \n" +
-            "    user_name,\n" +
-            "    attendance_date, /* 날짜별로 그룹화하기 위해 날짜만 추출 */\n" +
-            "    MIN(DATE_FORMAT(start_time, '%H:%i')) AS start_time,\n" +
-            "    MAX(DATE_FORMAT(end_time, '%H:%i')) AS end_time,\n" +
-            "    FLOOR(TIMESTAMPDIFF(MINUTE, MIN(start_time), MAX(end_time)) / 60.0) AS working_hours,\n" +
+            "    user_name, \n" +
+            "    attendance_date, \n" +
+            "    MIN(DATE_FORMAT(start_time, '%H:%i')) AS start_time, \n" +
+            "    MAX(DATE_FORMAT(end_time, '%H:%i')) AS end_time, \n" +
+            "    FLOOR(TIMESTAMPDIFF(MINUTE, MIN(start_time), MAX(end_time)) / 60.0) AS working_hours, \n" +
             "    FLOOR(CASE \n" +
             "                WHEN MIN(start_time) > STR_TO_DATE(CONCAT(DATE(attendance_date), ' 09:00:00'), '%Y-%m-%d %H:%i:%s') \n" +
             "                THEN TIMESTAMPDIFF(MINUTE, STR_TO_DATE(CONCAT(DATE(attendance_date), ' 09:00:00'), '%Y-%m-%d %H:%i:%s'), MIN(start_time)) / 60 \n" +
             "                ELSE 0 \n" +
-            "           END) AS latency_time,\n" +
+            "           END) AS latency_time, \n" +
             "    FLOOR(CASE \n" +
             "                WHEN MAX(end_time) < STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s') \n" +
             "                THEN TIMESTAMPDIFF(MINUTE, MAX(end_time), STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s')) / 60 \n" +
             "                ELSE 0 \n" +
-            "           END) AS early_leave_time,\n" +
+            "           END) AS early_leave_time, \n" +
             "    FLOOR(CASE \n" +
             "                WHEN MAX(end_time) > STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s') \n" +
             "                THEN TIMESTAMPDIFF(MINUTE, STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s'), MAX(end_time)) / 60 \n" +
             "                ELSE 0 \n" +
-            "           END) AS over_time,\n" +
-            "    holi_day\n" +
+            "           END) AS over_time, \n" +
+            "    MAX(holi_day) AS holi_day  -- holi_day를 집계 함수로 처리\n" +
             "FROM attendance\n" +
-            "GROUP BY employee_id, user_name, attendance_date;\n")
+            "GROUP BY \n" +
+            "    employee_id, \n" +
+            "    user_name, \n" +
+            "    attendance_date;\n")
     List<AttendanceDto> getAllAttList() throws DataAccessException;
 
     @Select("SELECT e.employee_id, e.user_name, " +
@@ -99,4 +102,33 @@ public interface AttendanceDao {
     // 최근 휴가계획 5개 조회
     @Select("SELECT * FROM `leave` ORDER BY leave_id DESC LIMIT 5")
     List<LeaveDto> selectRecentPosts() throws DataAccessException;
+
+    @Select("SELECT " +
+            "    employee_id, " +
+            "    user_name, " +
+            "    attendance_date, " +
+            "    MIN(DATE_FORMAT(start_time, '%H:%i')) AS start_time, " +
+            "    MAX(DATE_FORMAT(end_time, '%H:%i')) AS end_time, " +
+            "    FLOOR(TIMESTAMPDIFF(MINUTE, MIN(start_time), MAX(end_time)) / 60.0) AS working_hours, " +
+            "    FLOOR(CASE " +
+            "                WHEN MIN(start_time) > STR_TO_DATE(CONCAT(DATE(attendance_date), ' 09:00:00'), '%Y-%m-%d %H:%i:%s') " +
+            "                THEN TIMESTAMPDIFF(MINUTE, STR_TO_DATE(CONCAT(DATE(attendance_date), ' 09:00:00'), '%Y-%m-%d %H:%i:%s'), MIN(start_time)) / 60 " +
+            "                ELSE 0 " +
+            "           END) AS latency_time, " +
+            "    FLOOR(CASE " +
+            "                WHEN MAX(end_time) < STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s') " +
+            "                THEN TIMESTAMPDIFF(MINUTE, MAX(end_time), STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s')) / 60 " +
+            "                ELSE 0 " +
+            "           END) AS early_leave_time, " +
+            "    FLOOR(CASE " +
+            "                WHEN MAX(end_time) > STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s') " +
+            "                THEN TIMESTAMPDIFF(MINUTE, STR_TO_DATE(CONCAT(DATE(attendance_date), ' 18:00:00'), '%Y-%m-%d %H:%i:%s'), MAX(end_time)) / 60 " +
+            "                ELSE 0 " +
+            "           END) AS over_time " +
+            "FROM attendance " +
+            "WHERE DATE_FORMAT(attendance_date, '%Y-%m') = #{yearMonth} " +  // 년/월로 필터링
+            "AND (user_name LIKE CONCAT('%', #{userName}, '%') OR #{userName} IS NULL) " +  // 직원 이름으로 필터링, 이름이 없으면 전체 조회
+            "GROUP BY employee_id, user_name, attendance_date")
+    List<AttendanceDto> getAttendanceByMonthAndName(@Param("yearMonth") String yearMonth, @Param("userName") String userName) throws DataAccessException;
+
 }

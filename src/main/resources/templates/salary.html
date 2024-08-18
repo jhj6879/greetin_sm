@@ -28,6 +28,10 @@
     <h1 class="mb-4">급여 관리</h1>
 
     <form action="/salary" method="get">
+        <label for="nameSearch">사원 이름 검색: </label>
+        <input type="text" id="nameSearch" name="searchName" placeholder="사원 이름 입력">
+
+        <label for="month">월: </label>
         <select name="month">
             <option value="1">1월</option>
             <option value="2">2월</option>
@@ -42,6 +46,7 @@
             <option value="11">11월</option>
             <option value="12">12월</option>
         </select>
+        <label for="year">연도: </label>
         <input type="number" name="year" value="2024" min="2020" max="2030">
         <button type="submit">조회</button>
     </form>

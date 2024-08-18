@@ -18,6 +18,16 @@ public class EmployeeService {
     private final EmployeeDao employeeDao;
     private final PasswordEncoder passwordEncoder;
 
+    // 기존의 사원 리스트를 가져오는 메서드
+    public List<EmployeeDto> selectEmployeeList() {
+        return employeeDao.selectEmployeeList();
+    }
+
+    // 검색된 사원 리스트를 가져오는 메서드
+    public List<EmployeeDto> searchEmployees(String keyword) {
+        return employeeDao.searchEmployees(keyword);
+    }
+
     public EmployeeDto create(EmployeeDto dto) {
         dto.setUser_pw(passwordEncoder.encode(dto.getUser_pw()));
         this.employeeDao.insertEmployee(dto);
@@ -38,9 +48,6 @@ public class EmployeeService {
         return dto;
     }
 
-    public List<EmployeeDto> selectEmployeeList() {
-        return employeeDao.selectEmployeeList();
-    }
 
     public List<EmployeeDto> getPostListByKeyword(Search page) {
         // 검색된 전체 게시물 수 계산

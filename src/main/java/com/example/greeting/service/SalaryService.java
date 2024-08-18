@@ -23,6 +23,10 @@ public class SalaryService {
     @Autowired
     private SalaryDaoImpl salaryDaoImpl;  // 새로 추가된 구현 클래스
 
+    // 년 월 사원검색
+    public List<SalaryDto> getSalaryListByMonthAndName(int month, int year, String searchName) {
+        return salaryDao.getSalaryListByMonthAndName(month, year, searchName);
+    }
 
     // 월별로 생성된 급여 리스트를 가져오는 메서드
     public List<SalaryDto> getSalaryList(int month, int year) {

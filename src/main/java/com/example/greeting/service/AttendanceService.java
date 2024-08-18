@@ -20,6 +20,10 @@ public class AttendanceService {
     @Autowired
     private AttendanceDao attendanceDao;
 
+    public List<AttendanceDto> getAttendanceByMonthAndName(String yearMonth, String userName) {
+        return attendanceDao.getAttendanceByMonthAndName(yearMonth, userName);
+    }
+
     public AttendanceDto getTime(String user_id) {
         return attendanceDao.getTime(user_id);
     }

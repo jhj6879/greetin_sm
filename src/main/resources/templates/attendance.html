@@ -28,9 +28,15 @@
     <div class="header">
       <h1>근태관리</h1>
       <div class="right">
-        <label for="workDate">근무일자: </label>
-        <input type="date" id="workDate" name="workDate">
-        <button id="searchButton" class="buttonAtt">검색</button>
+        <form th:action="@{/attendance}" method="get">
+          <label for="yearMonth">근무 년/월: </label>
+          <input type="month" id="yearMonth" name="yearMonth" th:value="${yearMonth}">
+
+          <label for="userName">직원 이름: </label>
+          <input type="text" id="userName" name="userName" th:value="${userName}">
+
+          <button type="submit" class="buttonAtt">검색</button>
+        </form>
       </div>
     </div>
 
@@ -57,7 +63,7 @@
             <th>연장근로</th>
             <th>지각시간</th>
             <th>조퇴시간</th>
-            <th>휴가</th>
+<!--            <th>휴가</th>-->
           </tr>
           </thead>
           <tbody>
@@ -71,7 +77,7 @@
             <td th:text="${dto.over_time} + 시간"></td>
             <td th:text="${dto.latency_time} + 시간"></td>
             <td th:text="${dto.early_leave_time} + 시간"></td>
-            <td th:text="${dto.holi_day}"></td>
+<!--            <td th:text="${dto.holi_day}"></td>-->
           </tr>
           </tbody>
         </table>

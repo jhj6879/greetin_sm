@@ -6,6 +6,7 @@ import com.example.greeting.dto.SalaryDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -32,13 +33,31 @@ public interface SalaryDao {
 //    SalaryDto findAttendanceByEmployeeId(int employee_id) throws DataAccessException;
 
     // 기존 쿼리에서 year와 month를 추가하여 특정 달의 급여를 가져오도록 수정
-    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, s.position_wage, " +
-            "s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, s.employ_insurance, s.tot_salary, " +
-            "s.tot_tribute, s.real_number, s.payment_date " +
-            "FROM salary s " +
-            "WHERE s.employee_id = #{employee_id} " +
-            "AND YEAR(s.payment_date) = #{year} " +
-            "AND MONTH(s.payment_date) = #{month}")
-    SalaryDto findAttendanceByEmployeeIdAndMonth(int employee_id, int year, int month) throws DataAccessException;
+//    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, s.position_wage, " +
+//            "s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, s.employ_insurance, s.tot_salary, " +
+//            "s.tot_tribute, s.real_number, s.payment_date " +
+//            "FROM salary s " +
+//            "WHERE s.employee_id = #{employee_id} " +
+//            "AND YEAR(s.payment_date) = #{year} " +
+//            "AND MONTH(s.payment_date) = #{month}")
+//    SalaryDto findAttendanceByEmployeeIdAndMonth(int employee_id, int year, int month) throws DataAccessException;
 
+    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +
+            "s.position_wage, s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, " +
+            "s.employ_insurance, s.tot_salary, s.tot_tribute, s.real_number, s.payment_date " +
+            "FROM salary s " +
+            "WHERE s.employee_id = #{employee_id} AND YEAR(s.payment_date) = #{year} AND MONTH(s.payment_date) = #{month}")
+    SalaryDto findAttendanceByEmployeeIdAndMonth(@Param("employee_id") int employee_id,
+                                                 @Param("year") int year,
+                                                 @Param("month") int month);
+
+    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +
+            "s.position_wage, s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, " +
+            "s.employ_insurance, s.tot_salary, s.tot_tribute, s.real_number, s.payment_date " +
+            "FROM salary s " +
+            "WHERE MONTH(s.payment_date) = #{month} AND YEAR(s.payment_date) = #{year} " +
+            "AND s.user_name LIKE CONCAT('%', #{searchName}, '%')")
+    List<SalaryDto> getSalaryListByMonthAndName(@Param("month") int month,
+                                                @Param("year") int year,
+                                                @Param("searchName") String searchName);
 }

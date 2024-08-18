@@ -21,30 +21,56 @@ public class SalaryController {
     private SalaryService salaryService;
 
     // 관리자는 모든 직원 급여 관리
+//    @GetMapping("/salary")
+//    public String SalaryPage(@RequestParam(value = "month", required = false) Integer month,
+//                             @RequestParam(value = "year", required = false) Integer year,
+//                             RedirectAttributes redirectAttributes,
+//                             Model model) {
+//        if (month == null || year == null) {
+//            redirectAttributes.addAttribute("month", 7); // 기본값 설정
+//            redirectAttributes.addAttribute("year", 2024); // 기본값 설정
+//            return "redirect:/salary";
+//        }
+//
+//        // 월별 급여 데이터를 생성
+//        salaryService.generateMonthlySalaryData(year, month);
+//
+//        // 생성된 데이터를 조회
+//        List<SalaryDto> list = salaryService.getSalaryList(month, year);
+//        model.addAttribute("list", list);
+//
+//        // 기본적으로 첫 번째 사원의 급여 표시
+//        if (!list.isEmpty()) {
+//            SalaryDto dto = salaryService.calculateSalary(list.get(0).getEmployee_id(), year, month);
+//            model.addAttribute("dto", dto);
+//        }else {
+//            // 빈 객체를 모델에 추가하여 템플릿에서 오류가 발생하지 않도록 처리
+//            model.addAttribute("dto", new SalaryDto());
+//        }
+//
+//        return "salary";
+//    }
+
     @GetMapping("/salary")
     public String SalaryPage(@RequestParam(value = "month", required = false) Integer month,
                              @RequestParam(value = "year", required = false) Integer year,
+                             @RequestParam(value = "searchName", required = false) String searchName,
                              RedirectAttributes redirectAttributes,
                              Model model) {
         if (month == null || year == null) {
-            redirectAttributes.addAttribute("month", 7); // 기본값 설정
-            redirectAttributes.addAttribute("year", 2024); // 기본값 설정
+            redirectAttributes.addAttribute("month", 7);
+            redirectAttributes.addAttribute("year", 2024);
             return "redirect:/salary";
         }
 
-        // 월별 급여 데이터를 생성
-        salaryService.generateMonthlySalaryData(year, month);
-
-        // 생성된 데이터를 조회
-        List<SalaryDto> list = salaryService.getSalaryList(month, year);
+        // 급여 데이터를 가져오도록 수정
+        List<SalaryDto> list = salaryService.getSalaryListByMonthAndName(month, year, searchName);
         model.addAttribute("list", list);
 
-        // 기본적으로 첫 번째 사원의 급여 표시
         if (!list.isEmpty()) {
             SalaryDto dto = salaryService.calculateSalary(list.get(0).getEmployee_id(), year, month);
             model.addAttribute("dto", dto);
-        }else {
-            // 빈 객체를 모델에 추가하여 템플릿에서 오류가 발생하지 않도록 처리
+        } else {
             model.addAttribute("dto", new SalaryDto());
         }
 

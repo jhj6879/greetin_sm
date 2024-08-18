@@ -28,6 +28,13 @@ public interface EmployeeDao {
     @Select("select employee_id, user_name, hire_date from employee ")
     List<EmployeeDto> selectEmployeeList() throws DataAccessException;
 
+    // 검색된 사원 목록 조회 (이름, 부서, 직책 등으로 검색)
+    @Select("SELECT employee_id, user_name, hire_date FROM employee " +
+            "WHERE user_name LIKE CONCAT('%', #{keyword}, '%') " +
+            "OR department LIKE CONCAT('%', #{keyword}, '%') " +
+            "OR position LIKE CONCAT('%', #{keyword}, '%')")
+    List<EmployeeDto> searchEmployees(@Param("keyword") String keyword) throws DataAccessException;
+
     @Select("select employee_id, user_name, r_num, tel, address, email, gender," +
             " department, position, hire_date, resignation_date, employment, permit" +
             " from employee where employee_id = #{employee_id}")

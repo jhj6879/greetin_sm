@@ -27,12 +27,11 @@
 <div class="content">
     <h1 class="mb-4">사원 관리</h1>
     <div class="mb-4">
-        <div class="search">
-            <input type="text" id="keyword" name="keyword" placeholder="사원 검색" class="form-control d-inline-block w-25"/>
-            <button type="button" class="bt_search" onclick="search(this)">
-                <i class="fas fa-search"></i><span class="skip_info">검색</span>
-            </button>
-        </div>
+        <form id="searchForm" action="/employee/search" method="get">
+            <label for="keyword">사원 검색: </label>
+            <input type="text" id="keyword" name="keyword" placeholder="사원 이름, 부서 등으로 검색" class="form-control d-inline-block w-25"/>
+            <button type="submit" class="btn btn-primary">검색</button>
+        </form>
     </div>
     <div class="row">
         <div class="col-4">

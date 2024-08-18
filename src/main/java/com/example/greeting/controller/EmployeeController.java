@@ -22,44 +22,42 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     // 사원관리(관리자용)
+    // 기존 사원 목록 페이지
     @GetMapping("/employee")
-    public String Employee(Model model, @RequestParam(value="keyword", defaultValue="") String keyword) {
-        Search search = new Search(5, 5);
+    public String Employee(Model model, @RequestParam(value="keyword", required = false) String keyword) {
+        List<EmployeeDto> list;
 
-        // 검색어를 로그로 출력하여 확인
-        System.out.println("검색어: " + keyword);
-
-        // 검색어를 로그로 출력하여 확인
-        System.out.println("검색어: " + keyword);
-
-        // 검색어가 있다면 해당 검색어로 검색 결과를 가져옴
-        if (!keyword.isEmpty()) {
-            search.setKeyword(keyword);
-            List<EmployeeDto> list = employeeService.getPostListByKeyword(search);
-            model.addAttribute("list", list);
-            if (!list.isEmpty()) {
-                EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
-                model.addAttribute("dto", dto);
-            }
+        if (keyword == null || keyword.trim().isEmpty()) {
+            // 검색어가 없는 경우 전체 사원 목록
+            list = employeeService.selectEmployeeList();
         } else {
-            // 검색어가 없을 경우 전체 게시물 표시
-            List<EmployeeDto> list = employeeService.getInoutNoticePage();
-            model.addAttribute("list", list);
-            if (!list.isEmpty()) {
-                EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
-                model.addAttribute("dto", dto);
-            }
+            // 검색어가 있는 경우 해당 키워드로 검색된 사원 목록
+            list = employeeService.searchEmployees(keyword);
         }
 
-//        List<EmployeeDto> list = employeeService.selectEmployeeList();
-//        model.addAttribute("list", list);
-//        // 여기서는 기본적으로 첫 번째 사원을 선택해서 표시할 수 있습니다.
-//        if (!list.isEmpty()) {
-//            EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
-//            model.addAttribute("dto", dto);
-//        }
+        model.addAttribute("list", list);
+
+        // 기본적으로 첫 번째 사원의 상세정보 표시
+        if (!list.isEmpty()) {
+            EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
+            model.addAttribute("dto", dto);
+        }
 
         return "employee";
+    }
+
+    // 검색 기능을 위한 경로 (keyword에 따라 사원 목록을 필터링)
+    @GetMapping("/employee/search")
+    public String searchEmployee(@RequestParam("keyword") String keyword, Model model) {
+        List<EmployeeDto> list = employeeService.searchEmployees(keyword);
+        model.addAttribute("list", list);
+
+        if (!list.isEmpty()) {
+            EmployeeDto dto = employeeService.selectEmployee(list.get(0).getEmployee_id());
+            model.addAttribute("dto", dto);
+        }
+
+        return "employee"; // 검색 후 employee.html 페이지로 결과를 반환
     }
 
     // 사원 상세 정보를 가져오는 새로운 메서드 추가
