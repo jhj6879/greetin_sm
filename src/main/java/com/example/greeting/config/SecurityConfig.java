@@ -35,6 +35,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
                         .requestMatchers(new AntPathRequestMatcher("/record-time")).authenticated()
                         .requestMatchers("/attendance").authenticated()
+                        .requestMatchers("/salary").authenticated()
                         .requestMatchers("/employee/**").hasRole("ADMIN")  // 관리자만 /employee 경로 접근 가능
                         .anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable)

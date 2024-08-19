@@ -26,7 +26,10 @@ public class SalaryDto {
 
     private LocalDate payment_date; // 새로 추가
 
-    private String tot_salary;
-    private String tot_tribute;
+    private String tot_salary;  // 총 급여
+    private String tot_tribute;  // 총 새액
     private String real_number;
+
+    // 근무 일수를 계산하여 저장하기 위한 필드
+    private int work_days;  // 근무 일수 필드 추가
 }

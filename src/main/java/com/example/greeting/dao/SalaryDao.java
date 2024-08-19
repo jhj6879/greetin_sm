@@ -60,9 +60,12 @@ public interface SalaryDao {
             "FORMAT(ROUND(s.national_pension, -1), 0) AS national_pension, " +  // 국민연금 10의 자리 반올림 및 천 단위 포맷
             "FORMAT(ROUND(s.health_insurance, -1), 0) AS health_insurance, " +  // 건강보험 10의 자리 반올림 및 천 단위 포맷
             "FORMAT(ROUND(s.employ_insurance, -1), 0) AS employ_insurance, " +  // 고용보험 10의 자리 반올림 및 천 단위 포맷
-            "FORMAT(ROUND(s.tot_salary, -1), 0) AS tot_salary, " +  // 총 급여 10의 자리 반올림 및 천 단위 포맷
-            "FORMAT(ROUND(s.tot_tribute, -1), 0) AS tot_tribute, " +  // 총 공제액 10의 자리 반올림 및 천 단위 포맷
-            "FORMAT(ROUND(s.real_number, -1), 0) AS real_number, " +  // 실 수령액 10의 자리 반올림 및 천 단위 포맷
+            // tot_salary는 daily_wage, position_wage, additional_wage의 합
+            "FORMAT(ROUND(s.daily_wage + s.position_wage + s.additional_wage, -1), 0) AS tot_salary, " +
+            // tot_tribute는 national_pension, health_insurance, employ_insurance, income_tax, resident_tax의 합
+            "FORMAT(ROUND(s.national_pension + s.health_insurance + s.employ_insurance + s.income_tax + s.resident_tax, -1), 0) AS tot_tribute, " +
+            // real_number는 tot_salary - tot_tribute
+            "FORMAT(ROUND((s.daily_wage + s.position_wage + s.additional_wage) - (s.national_pension + s.health_insurance + s.employ_insurance + s.income_tax + s.resident_tax), -1), 0) AS real_number, " +
             "s.payment_date " +
             "FROM salary s " +
             "WHERE s.employee_id = #{employee_id} " +
@@ -71,6 +74,7 @@ public interface SalaryDao {
     SalaryDto findAttendanceByEmployeeIdAndMonth(@Param("employee_id") int employee_id,
                                                  @Param("year") int year,
                                                  @Param("month") int month);
+
 
 
     @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈화면</title>
+    <title>부서관리</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
 </head>
@@ -12,20 +12,20 @@
     <div class="text-center mb-4">
         <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
     </div>
-    <a href="/"><li>Home</li></a>
-    <a href="/notice"><li>Notice</li></a>
-    <a href="/email"><li>Email</li></a>
-    <a href="/calendar"><li>Calendar</li></a>
-    <a href="/attendance"><li>Attendance</li></a>
-    <a href="/salary"><li>Salary</li></a>
-    <a href="/employee" ><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Employee</li></a>
-    <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
-    <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
+    <a href="/"><li>메인화면</li></a>
+    <a href="/notice"><li>공지사항</li></a>
+    <a href="/attendance"><li>근태관리</li></a>
+    <a href="/salary"><li>급여관리</li></a>
+    <a href="/leave_application"><li>휴가신청</li></a>
+    <a href="/employee" ><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">사원관리</li></a>
+    <a href="/department"><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">부서관리</li></a>
+    <a th:href="@{/login}"><li sec:authorize="isAnonymous()">로그인</li></a>
+    <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">로그아웃</li></a>
 </div>
 
 <div class="content">
     <h1 class="mb-4">부서 관리</h1>
-    <input type="text" id="departmentSearch" placeholder="부서 검색" class="form-control mb-4">
+<!--    <input type="text" id="departmentSearch" placeholder="부서 검색" class="form-control mb-4">-->
     <div id="departmentList">
         <!-- 부서 목록이 여기에 동적으로 추가됨 -->
         <!-- 부서 추가 폼 -->
@@ -47,7 +47,7 @@
             <tr>
                 <th>부서 코드</th>
                 <th>부서 이름</th>
-                <th>수정</th>
+                <!--<th>수정</th>-->
                 <th>삭제</th>
             </tr>
             </thead>
@@ -55,10 +55,15 @@
             <tr th:each="department : ${departmentList}">
                 <td th:text="${department.department}"></td>
                 <td th:text="${department.department_name}"></td>
-                <td>
-                    <!-- 부서 수정 버튼 -->
-                    <button class="btn btn-warning" onclick="editDepartment('${department.department}', '${department.department_name}')">수정</button>
-                </td>
+                <!--<td>
+                    &lt;!&ndash; 부서 수정 버튼 &ndash;&gt;
+                    <button class="btn btn-warning"
+                            data-department-code="${department.department}"
+                            data-department-name="${department.department_name}"
+                            onclick="editDepartment(this)">
+                        수정
+                    </button>
+                </td>-->
                 <td>
                     <!-- 부서 삭제 폼 -->
                     <form action="/departments/delete" method="post">
@@ -71,9 +76,9 @@
         </table>
 
         <!-- 부서 수정 폼 -->
-        <div id="editForm" style="display:none;">
+        <!--<div id="editForm" style="display:none;">
             <h2>부서 수정</h2>
-            <form action="/departments/update" method="post">
+            <form id="updateForm" action="/departments/update" method="post">
                 <input type="hidden" id="editDepartment" name="department">
                 <div class="form-group">
                     <label for="editDepartmentName">부서 이름</label>
@@ -81,7 +86,8 @@
                 </div>
                 <button type="submit" class="btn btn-primary mt-2">수정 완료</button>
             </form>
-        </div>
+        </div>-->
+
     </div>
 </div>
 

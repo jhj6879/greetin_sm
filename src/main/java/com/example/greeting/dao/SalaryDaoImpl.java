@@ -19,6 +19,8 @@ public class SalaryDaoImpl {
 
     @Transactional
     public void generateMonthlySalaryData(int year, int month) {
+        System.out.println("generateMonthlySalaryData 호출됨. 연도: " + year + ", 월: " + month);
+
         // 이미 해당 월의 데이터가 있는지 확인 (optional)
         String checkDataExistsSql =
                 "SELECT COUNT(*) FROM salary " +
@@ -42,21 +44,14 @@ public class SalaryDaoImpl {
         // 1. 임시 테이블 생성
         String createTempTableSql =
                 "CREATE TEMPORARY TABLE temp_monthly_attendance AS " +
-                        "SELECT " +
-                        "    a.employee_id, " +
-                        "    a.user_name, " +
-                        "    d.department_name AS department, " +
-                        "    p.position_name AS position, " +
-                        "    COUNT(a.attendance_date) AS work_days, " +
-                        "    SUM(TIMESTAMPDIFF(HOUR, a.start_time, a.end_time)) AS total_work_hours " +
-                        "FROM " +
-                        "    attendance a " +
-                        "JOIN department_td d ON a.department = d.department " +  // department_td와 조인
-                        "JOIN position_td p ON a.position = p.position " +  // position_td와 조인
-                        "WHERE " +
-                        "    YEAR(a.start_time) = ? AND MONTH(a.start_time) = ? " +  // 대상 년도와 월
-                        "GROUP BY " +
-                        "    a.employee_id, a.user_name, d.department_name, p.position_name;";
+                        "SELECT a.employee_id, a.user_name, d.department_name AS department, p.position_name AS position, " +
+                        "COUNT(a.attendance_date) AS work_days, " +  // 근무 일수 계산
+                        "SUM(TIMESTAMPDIFF(HOUR, a.start_time, a.end_time)) AS total_work_hours " +
+                        "FROM attendance a " +
+                        "JOIN department_td d ON a.department = d.department " +
+                        "JOIN position_td p ON a.position = p.position " +
+                        "WHERE YEAR(a.start_time) = ? AND MONTH(a.start_time) = ? " +
+                        "GROUP BY a.employee_id, a.user_name, d.department_name, p.position_name;";
 
         // 2. Salary 테이블에 데이터 삽입
         String insertSalaryDataSql =
@@ -66,7 +61,7 @@ public class SalaryDaoImpl {
                         "    ma.user_name, " +
                         "    ma.department, " +
                         "    ma.position, " +
-                        "    70000 AS daily_wage,  " +
+                        "    (70000 * ma.work_days) AS daily_wage,  " +  // 근무 일수 * 하루 일당으로 계산된 기본급
                         "    CASE WHEN ma.total_work_hours > (8 * ma.work_days) THEN (10000 * (ma.total_work_hours - 8 * ma.work_days)) ELSE 0 END AS additional_wage,  " +  // 추가 수당 계산
                         "    pt.position_wage,  " +
                         "    ((70000 * ma.work_days) + pt.position_wage + CASE WHEN ma.total_work_hours > (8 * ma.work_days) THEN (10000 * (ma.total_work_hours - 8 * ma.work_days)) ELSE 0 END) AS tot_salary,  " +  // 총 급여

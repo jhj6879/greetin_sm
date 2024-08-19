@@ -20,6 +20,7 @@ public class AttendanceService {
     @Autowired
     private AttendanceDao attendanceDao;
 
+    // 특정 직원의 특정 월의 근태 기록과 근무일수를 가져옴
     public List<AttendanceDto> getAttendanceByMonthAndName(String yearMonth, String userName) {
         return attendanceDao.getAttendanceByMonthAndName(yearMonth, userName);
     }

@@ -28,6 +28,9 @@ public class AttendanceDto {
     private LocalDate work_date;  // 날짜 필드 추가
     private String attendance_date;  // 날짜 필드 추가
 
+    // 근무 일수를 계산하여 저장하기 위한 필드
+    private int work_days;  // 근무 일수 필드 추가
+
     public int getWorkingHours() {
         return 0;
     }

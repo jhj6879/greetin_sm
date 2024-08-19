@@ -12,15 +12,15 @@
   <div class="text-center mb-4">
     <img src="https://via.placeholder.com/150" alt="Logo" class="img-fluid rounded-circle">
   </div>
-  <a href="/"><li>Home</li></a>
-  <a href="/notice"><li>Notice</li></a>
-  <a href="/email"><li>Email</li></a>
-  <a href="/calendar"><li>Calendar</li></a>
-  <a href="/attendance"><li>Attendance</li></a>
-  <a href="/salary"><li>Salary</li></a>
-  <a href="/employee" ><li>Employee</li></a>
-  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">Login</li></a>
-  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">Logout</li></a>
+  <a href="/"><li>메인화면</li></a>
+  <a href="/notice"><li>공지사항</li></a>
+  <a href="/attendance"><li>근태관리</li></a>
+  <a href="/salary"><li>급여관리</li></a>
+  <a href="/leave_application"><li>휴가신청</li></a>
+  <a href="/employee" ><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">사원관리</li></a>
+  <a href="/department"><li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">부서관리</li></a>
+  <a th:href="@{/login}"><li sec:authorize="isAnonymous()">로그인</li></a>
+  <a th:href="@{/logout}"><li sec:authorize="isAuthenticated()">로그아웃</li></a>
 </div>
 
 <div class="content">

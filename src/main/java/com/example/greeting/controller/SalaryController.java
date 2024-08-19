@@ -63,6 +63,9 @@ public class SalaryController {
             return "redirect:/salary";
         }
 
+        // 데이터 생성 메서드 호출
+        salaryService.generateMonthlySalaryData(year, month);
+
         // 급여 데이터를 가져오도록 수정
         List<SalaryDto> list = salaryService.getSalaryListByMonthAndName(month, year, searchName);
         model.addAttribute("list", list);

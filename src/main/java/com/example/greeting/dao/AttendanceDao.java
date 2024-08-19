@@ -131,4 +131,13 @@ public interface AttendanceDao {
             "GROUP BY employee_id, user_name, attendance_date")
     List<AttendanceDto> getAttendanceByMonthAndName(@Param("yearMonth") String yearMonth, @Param("userName") String userName) throws DataAccessException;
 
+    // 직원별 근무일수를 계산하는 쿼리
+    @Select("SELECT COUNT(DISTINCT DATE(start_time)) " +
+            "FROM attendance " +
+            "WHERE employee_id = #{employee_id} " +
+            "AND YEAR(start_time) = #{year} " +
+            "AND MONTH(start_time) = #{month}")
+    int countWorkDays(@Param("employee_id") int employee_id,
+                      @Param("year") int year,
+                      @Param("month") int month);
 }
