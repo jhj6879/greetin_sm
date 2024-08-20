@@ -31,6 +31,25 @@ public class AttendanceController {
     @Autowired
     private EmployeeService employeeService;
 
+    // 근테 관리
+    @GetMapping("/attendance")
+    public String getAttendance(@RequestParam(value = "yearMonth", required = false) String yearMonth,
+                                @RequestParam(value = "userName", required = false) String userName, Model model) {
+
+        // 기본적으로 현재 년/월로 설정, 값이 없을 경우 기본 값 설정
+        if (yearMonth == null) {
+            yearMonth = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM"));
+        }
+
+        List<AttendanceDto> list = attendanceService.getAttendanceByMonthAndName(yearMonth, userName);
+        model.addAttribute("list", list);
+        model.addAttribute("yearMonth", yearMonth);
+        model.addAttribute("userName", userName);
+
+        return "attendance";
+    }
+
+    // 홈화면 출,퇴근 번튼 클릭시 근태 저장
     @PostMapping("/record-time")
     public ResponseEntity<String> recordTime(@RequestBody AttendanceRequest request, Principal principal) {
         try {
@@ -82,24 +101,7 @@ public class AttendanceController {
         }
     }
 
-    // 근테 관리
-    @GetMapping("/attendance")
-    public String getAttendance(@RequestParam(value = "yearMonth", required = false) String yearMonth,
-                                @RequestParam(value = "userName", required = false) String userName, Model model) {
-
-        // 기본적으로 현재 년/월로 설정, 값이 없을 경우 기본 값 설정
-        if (yearMonth == null) {
-            yearMonth = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM"));
-        }
-
-        List<AttendanceDto> list = attendanceService.getAttendanceByMonthAndName(yearMonth, userName);
-        model.addAttribute("list", list);
-        model.addAttribute("yearMonth", yearMonth);
-        model.addAttribute("userName", userName);
-
-        return "attendance";
-    }
-
+    // 휴가신청
     @GetMapping("/leave_application")
     public String LeaveAppli(Model model) {
         // 현재 로그인한 사용자의 정보를 가져옴
@@ -129,7 +131,7 @@ public class AttendanceController {
         return "leave_application";  // leave_application.html 템플릿 렌더링
     }
 
-
+    // 휴가신청 저장
     @PostMapping("/applyLeave")
     public String applyLeave(@ModelAttribute LeaveDto leaveDto) {
         System.out.println("LeaveDto: " + leaveDto);
@@ -137,6 +139,5 @@ public class AttendanceController {
         attendanceService.applyLeave(leaveDto);
         return "redirect:/";
     }
-
 
 }

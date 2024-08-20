@@ -37,9 +37,6 @@ public class PostController {
     @Autowired
     private FileService fileService;
 
-    // 공지사항은 유저는 보기만 가능하게 하고 글 작성하는것과 삭제하는것은 불가능하게 막는다.
-    // 유저는 공지사항 보기 댓글 작성 까지만
-
     // 관리자 공지사항 작성
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/write")
@@ -47,6 +44,7 @@ public class PostController {
         return "write";
     }
 
+    // 공지사항 업로드
     @PostMapping("/write")
     public String writePost(Model model, PostDto dto,
                             @RequestParam(value="file", required=false) MultipartFile[] files) { //파일 가져오는 클래스 적용해서 첨부파일 기능 적용 // 여러 파일 적용하기 위해 배열로 변경
@@ -135,27 +133,7 @@ public class PostController {
         return "notice";
     }
 
-//    // 페이징
-//    @GetMapping("/notice/{page}")
-//    public String boardPage(Model model, @PathVariable("page") int page,
-//                            @RequestParam(value="keyword", defaultValue="") String keyword,
-//                            @RequestParam(value = "recordSize", defaultValue = "10") int recordSize,
-//                            @RequestParam(value = "searchType", required = false) String searchType) {
-//        Search search = new Search(page, recordSize);
-//        // 검색기능 추가(키워드 파라메타가 있으면 키워드 설정)
-//        search.setKeyword(keyword);
-//        search.setPage(page);
-//        search.getOffset();
-//        //게시판 리스트
-//        List<PostDto> list = postService.getInoutNotice(search);
-////        int totPostCount = postService.getTotPostCount(keyword, searchType, page);
-//        model.addAttribute("list", list);
-//        // 페이징에 대한 것도 같이 가야함
-//        model.addAttribute("page",search);
-//        return "notice";
-//    }
-
-
+    // 게시글과 댓글 보기
     @GetMapping("/view/{post_no}")
     public String viewPost(@PathVariable("post_no") int post_no, Model model) {
         PostDto dto = postService.getPost(post_no);
@@ -179,6 +157,7 @@ public class PostController {
     }
 
     //게시글 삭제
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{post_no}")
     public String delPost(@PathVariable("post_no") int post_no) {
         int post = postService.getPostNo(post_no);
@@ -187,6 +166,7 @@ public class PostController {
     }
 
     //게시글 수정
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/edit/{post_no}")
     public String editForm(@PathVariable("post_no") int post_no, Model model) {
         //게시글 내용 가져오기

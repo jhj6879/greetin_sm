@@ -81,6 +81,7 @@ public interface AttendanceDao {
             "    attendance_date;\n")
     List<AttendanceDto> getAllAttList() throws DataAccessException;
 
+    // 휴일 신청 직원 정보 조회
     @Select("SELECT e.employee_id, e.user_name, " +
             "CASE " +
             "WHEN e.department = '10' THEN '재정관리팀' " +
@@ -95,14 +96,16 @@ public interface AttendanceDao {
             "WHERE e.employee_id = #{employee_id}")
     LeaveDto selectEmployee(@Param("employee_id") int employee_id) throws DataAccessException;
 
+    // 휴가 신청 입력
     @Insert("INSERT INTO `leave` (leave_id, employee_id, user_name, department, holi_day, start_day, end_day, leave_reason) " +
             "VALUES (#{leave_id}, #{employee_id}, #{user_name}, #{department}, #{holi_day}, #{start_day}, #{end_day}, #{leave_reason})")
     void insertLeave(LeaveDto leaveDto);
 
-    // 최근 휴가계획 5개 조회
+    // index에서 최근 휴가계획 5개 조회
     @Select("SELECT * FROM `leave` ORDER BY leave_id DESC LIMIT 5")
     List<LeaveDto> selectRecentPosts() throws DataAccessException;
 
+    // 근태 시간계산해서 조회
     @Select("SELECT " +
             "    employee_id, " +
             "    user_name, " +

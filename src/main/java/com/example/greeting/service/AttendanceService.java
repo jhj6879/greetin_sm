@@ -42,7 +42,7 @@ public class AttendanceService {
         attendanceDao.saveOrUpdate(att);
     }
 
-    // 퇴근 및 휴일 처리
+    // 퇴근 처리
     public void recordClockOutOrHoliday(AttendanceDto att) throws DataAccessException {
         attendanceDao.updateAttendance(att);
     }
