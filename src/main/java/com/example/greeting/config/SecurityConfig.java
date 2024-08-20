@@ -37,6 +37,7 @@ public class SecurityConfig {
                         .requestMatchers("/attendance").authenticated()
                         .requestMatchers("/salary").authenticated()
                         .requestMatchers("/employee/**").hasRole("ADMIN")  // 관리자만 /employee 경로 접근 가능
+                        .requestMatchers("/department/**").hasRole("ADMIN")  // 관리자만 /employee 경로 접근 가능
                         .anyRequest().permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin((formLogin) -> formLogin.loginPage("/login").defaultSuccessUrl("/"))
