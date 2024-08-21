@@ -311,3 +311,48 @@ body {
     width: 620px; /* 테이블에 맞춘 너비 설정 */
     margin: 20px auto; /* 컨테이너를 중앙 정렬 */
 }
+
+/* 직원 리스트 표 스타일 */
+#employeeSalaryList {
+    border-collapse: collapse; /* 테두리 겹침 제거 */
+    width: 100%; /* 표 너비를 100%로 설정 */
+    margin: 20px 0; /* 표 상단 여백 */
+}
+
+#employeeSalaryList th, #employeeSalaryList td {
+    border: 1px solid #000; /* 셀 테두리를 검은색 실선으로 설정 */
+    padding: 8px; /* 셀 내부 여백 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+#employeeSalaryList th {
+    background-color: #f2f2f2; /* 헤더 배경색 설정 */
+    font-weight: bold; /* 헤더 텍스트 굵게 */
+}
+
+#employeeSalaryList tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행 배경색 설정 */
+}
+
+/* 사원 리스트 표 스타일 */
+#employeeList {
+    border-collapse: collapse; /* 테두리 겹침 제거 */
+    width: 100%; /* 표 너비를 100%로 설정 */
+    margin: 20px 0; /* 표 상단 여백 */
+}
+
+#employeeList th, #employeeList td {
+    border: 1px solid #000; /* 셀 테두리를 검은색 실선으로 설정 */
+    padding: 8px; /* 셀 내부 여백 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+#employeeList th {
+    background-color: #f2f2f2; /* 헤더 배경색 설정 */
+    font-weight: bold; /* 헤더 텍스트 굵게 */
+}
+
+#employeeList tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행 배경색 설정 */
+}
+
