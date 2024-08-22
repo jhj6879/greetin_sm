@@ -214,5 +214,4 @@ public class PostController {
         return "redirect:/view/" + dto.getPost_no();
     }
 
-
 }

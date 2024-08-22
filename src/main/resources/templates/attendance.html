@@ -32,14 +32,8 @@
         <form th:action="@{/attendance}" method="get">
           <label for="yearMonth">근무 년/월: </label>
           <input type="month" id="yearMonth" name="yearMonth" th:value="${yearMonth}">
-
-          <!-- 관리자만 직원 이름으로 검색 가능 -->
-<!--          <label for="userName" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">직원 이름: </label>-->
-<!--          <input type="text" id="userName" name="userName" th:value="${userName}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">-->
-
           <label for="userName">직원 이름: </label>
           <input type="text" id="userName" name="userName" th:value="${userName}">
-
           <button type="submit" class="buttonAtt">검색</button>
         </form>
       </div>
@@ -47,15 +41,7 @@
 
     <div class="attendance-section">
       <h3>일일근태관리</h3>
-<!--      <div class="tabs">-->
-<!--        <button class="tab-button active" onclick="openTab(event, 'individual')">사원개별</button>-->
-<!--        <button class="tab-button" onclick="openTab(event, 'group')">사원전체</button>-->
-<!--      </div>-->
-
       <div id="individual" class="tab-content active">
-<!--        <p class="info-text">-->
-<!--          * 출퇴근시간은 입장, 외근, 지각,조퇴시간이 개시되지 않은 경우 당일만 수정이 가능합니다.<br>-->
-<!--        </p>-->
         <table class="attendance-table">
           <thead>
           <tr>
@@ -68,7 +54,6 @@
             <th>연장근로</th>
             <th>지각시간</th>
             <th>조퇴시간</th>
-<!--            <th>휴가</th>-->
           </tr>
           </thead>
           <tbody>
@@ -82,7 +67,6 @@
             <td th:text="${dto.over_time} + 시간"></td>
             <td th:text="${dto.latency_time} + 시간"></td>
             <td th:text="${dto.early_leave_time} + 시간"></td>
-<!--            <td th:text="${dto.holi_day}"></td>-->
           </tr>
           </tbody>
         </table>

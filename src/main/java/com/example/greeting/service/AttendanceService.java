@@ -29,14 +29,6 @@ public class AttendanceService {
         return attendanceDao.getTime(user_id);
     }
 
-    public List<AttendanceDto> getAttendanceList(int employee_id) {
-        return attendanceDao.getAttList(employee_id);
-    }
-
-    public List<AttendanceDto> getAllAttendanceList() {
-        return attendanceDao.getAllAttList();
-    }
-
     // 출근 처리
     public void save(AttendanceDto att) {
         attendanceDao.saveOrUpdate(att);
@@ -63,10 +55,6 @@ public class AttendanceService {
 
         // 데이터베이스에 저장
         attendanceDao.insertLeave(leaveDto);
-    }
-
-    public LeaveDto selectEmployee(int employee_id) {
-        return attendanceDao.selectEmployee(employee_id);
     }
 
     public List<LeaveDto> selectRecentPosts() {

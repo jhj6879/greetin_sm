@@ -55,17 +55,14 @@
               </td>
             </tr>
           </table>
-<!--          <span th:if="${#authentication.name == post.user_id}">-->
           <input type="button" value="글 수정" th:onclick="|location.href='/edit/' + ${post.post_no}|">
           <input type="button" value="글 삭제" th:onclick="|location.href='/delete/' + ${post.post_no}|">
-<!--		</span>-->
           <a href="/notice"><input type="button" value="글 목록"></a>
         </form>
         <br>
         <form th:action="@{/reply}" method="post">
           <table>
             <tr>
-<!--            <tr sec:authorize="isAuthenticated()">-->
               <th>댓글</th>
               <td>
                 <input type="text" name="comment">

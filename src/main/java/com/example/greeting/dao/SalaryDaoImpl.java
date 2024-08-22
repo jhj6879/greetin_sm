@@ -32,13 +32,6 @@ public class SalaryDaoImpl {
             // 데이터가 이미 존재하면 삽입하지 않음 또는 삭제 후 삽입
             System.out.println("Data already exists for year: " + year + " month: " + month);
             return; // 또는 기존 데이터를 삭제하고 새로운 데이터를 삽입하려면 아래 delete를 사용할 수 있음.
-
-            // 만약 기존 데이터를 삭제하고 싶다면 아래 코드를 사용
-        /*
-        String deleteOldDataSql =
-                "DELETE FROM salary WHERE YEAR(payment_date) = ? AND MONTH(payment_date) = ?";
-        jdbcTemplate.update(deleteOldDataSql, year, month);
-        */
         }
 
         // 1. 임시 테이블 생성

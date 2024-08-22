@@ -51,19 +51,9 @@ public class PostService {
         return postDao.selectNotice();
     }
 
-//    // 검색기능(페이징과 함침)
-//    public List<PostDto> getPostListByKeyword(Search page) {
-//        page.calcPage(postDao.selectPostCntByKeyword(page.getKeyword()));
-//        int offset = page.getOffset();
-//        int cnt = page.getRecordSize();
-//        String keyword = page.getKeyword();
-//        return postDao.selectPostListByKeyword(offset, cnt, keyword);
-//    }
-
     public int getTotPostCount(String keyword, String searchType, int page) {
         return postDao.countPosts(keyword, searchType, page);
     }
-
 
     public PostDto getPost(int post_no) {
         return postDao.selectPostByPostNo(post_no);
@@ -98,4 +88,5 @@ public class PostService {
     public List<PostDto> selectRecentPosts() {
         return postDao.selectRecentPosts();
     }
+
 }

@@ -52,19 +52,4 @@ public interface EmployeeDao {
     @Select("SELECT employee_id, user_name, department FROM employee WHERE user_id = #{userId}")
     EmployeeDto findEmployeeId(@Param("userId") String userId);
 
-    // 검색 기능 (concat을 안해주면 문자로 인식해 오류가 난다.)
-    @Select("SELECT * FROM Employee " +
-            "WHERE (title LIKE CONCAT('%', #{keyword}, '%') OR content LIKE CONCAT('%', #{keyword}, '%')) " +
-            "ORDER BY employee_id DESC LIMIT #{offset}, #{cnt}")
-    List<EmployeeDto> selectPostListByKeyword(@Param("offset") int offset,
-                                          @Param("cnt") int cnt,
-                                          @Param("keyword") String keyword) throws DataAccessException;
-
-    @Select("SELECT COUNT(*) FROM post WHERE" +
-            "(title LIKE CONCAT('%',#{keyword},'%') OR content LIKE CONCAT('%',#{keyword},'%'))")
-    int selectPostCntByKeyword(@Param("keyword") String keyword) throws DataAccessException;
-
-    @Select("select post_no,title,user_id,create_date,hit_cnt FROM post")
-    List<EmployeeDto> selectNotice() throws DataAccessException;
-
 }

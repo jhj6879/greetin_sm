@@ -56,7 +56,6 @@
         <div class="row">
             <div class="col-4">
                 <ul id="employeeList" class="list-group">
-                    <!-- 사원 목록이 여기에 동적으로 추가됨 -->
                     <table id="employeeSalaryList" class="list-group">
                         <tr>
                             <th>사번</th>
@@ -65,7 +64,6 @@
                             <th>부서명</th>
                             <th>급여 지급일</th>
                         </tr>
-                        <!-- 사원 목록 데이터는 Thymeleaf가 동적으로 채움 -->
                         <tr th:each="dto : ${list}" class="employee-row" th:data-employee-id="${dto.employee_id}">
                             <td th:text="${dto.employee_id}"></td>
                             <td th:text="${dto.user_name}"></td>

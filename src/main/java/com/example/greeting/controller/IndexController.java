@@ -41,13 +41,6 @@ public class IndexController {
         return "/index";
     }
 
-//    @GetMapping("/")
-//    public String HomeLeave(Model model){
-//        List<LeaveDto> leaveList = attendanceService.selectRecentPosts();
-//        model.addAttribute("list", leaveList);
-//        return "/index";
-//    }
-
     @GetMapping("/index")
     public ModelAndView getMemberInfo(Principal principal) {
         ModelAndView mav = new ModelAndView("index");
@@ -60,8 +53,6 @@ public class IndexController {
 
         return mav;
     }
-
-
 
     // 관지라 유저 모두 사용 (추후 시간 가능하면)
     @GetMapping("/calendar")

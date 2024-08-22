@@ -21,20 +21,8 @@ public class DepartmentService {
         departmentDao.addDepartment(departmentDto);
     }
 
-    public void updateDepartment(DepartmentDto departmentDto) {
-        departmentDao.updateDepartment(departmentDto);
-    }
-
     public void deleteDepartment(String department) {
         departmentDao.deleteDepartment(department);
     }
 
-    // 부서 코드로 특정 부서 조회
-    public DepartmentDto getDepartmentById(String department) {
-        return departmentDao.getDepartmentById(department);
-    }
-
-    public DepartmentDto selectDepartment() {
-        return departmentDao.selectDepartment();
-    }
 }

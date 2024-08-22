@@ -41,31 +41,6 @@ public class SalaryService {
         return calculateSalaryList(attendanceList);
     }
 
-//    public List<SalaryDto> getSalaryList(int month, int year) {
-//        List<AttendanceDto> attendanceList = salaryDao.getSalaryList(month, year);
-////        System.out.println("Attendance List: " + attendanceList);
-//        return calculateSalary(attendanceList);
-//    }
-
-//    public SalaryDto calculateSalary(int employee_id) {
-//        return salaryDao.findAttendanceByEmployeeId(employee_id);
-//    }
-
-//    // 기존 메서드: 특정 사원의 급여를 조회하는 메서드
-//    // 새로운 파라미터로 year와 month를 추가하여 특정 달의 급여를 조회할 수 있도록 수정
-//    public SalaryDto calculateSalary(int employee_id, int year, int month) {
-//        System.out.println("Calculating salary for employee_id: " + employee_id + ", year: " + year + ", month: " + month);
-//
-//        SalaryDto salary = salaryDao.findAttendanceByEmployeeIdAndMonth(employee_id, year, month);
-//
-//        if (salary == null) {
-//            System.out.println("해당 월에 대한 급여 데이터가 없습니다. 사원 ID: " + employee_id + ", 연도: " + year + ", 월: " + month);
-//            return new SalaryDto(); // 빈 객체 반환 또는 사용자에게 알림
-//        }
-//
-//        return salary;
-//    }
-
     // 특정 사원의 급여를 계산하는 메서드 (기존 메서드 수정)
     public SalaryDto calculateSalary(int employee_id, int year, int month) {
         // 기존 SalaryDto를 데이터베이스에서 가져옴
@@ -166,10 +141,6 @@ public class SalaryService {
         int positionWage = Integer.parseInt(salary.getPosition_wage());
         int additionalWage = Integer.parseInt(salary.getAdditional_wage());
 
-//        salary.setDaily_wage(String.valueOf(basicWage));
-//        salary.setPosition_wage(String.valueOf(positionWage));
-//        salary.setAdditional_wage(String.valueOf(additionalWage));
-
         // 총 지급액 계산
         int totalSalary = basicWage + positionWage + additionalWage;
         salary.setTot_salary(String.valueOf(totalSalary));
@@ -195,8 +166,6 @@ public class SalaryService {
 
         return salary;
     }
-
-
 
     private List<SalaryDto> calculateSalary(List<AttendanceDto> attendanceList) {
         List<SalaryDto> salaryList = new ArrayList<>();

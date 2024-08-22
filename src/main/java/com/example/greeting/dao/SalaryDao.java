@@ -25,32 +25,6 @@ public interface SalaryDao {
             "GROUP BY a.employee_id, a.user_name, p.position_name, d.department_name")
     List<AttendanceDto> getSalaryList(int month, int year) throws DataAccessException;
 
-//    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, s.position_wage, \n" +
-//            "       s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, s.employ_insurance, s.tot_salary, \n" +
-//            "       s.tot_tribute, s.real_number, s.payment_date \n" +
-//            "FROM salary s \n" +
-//            "WHERE s.employee_id = #{employee_id}")
-//    SalaryDto findAttendanceByEmployeeId(int employee_id) throws DataAccessException;
-
-    // 기존 쿼리에서 year와 month를 추가하여 특정 달의 급여를 가져오도록 수정
-//    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, s.position_wage, " +
-//            "s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, s.employ_insurance, s.tot_salary, " +
-//            "s.tot_tribute, s.real_number, s.payment_date " +
-//            "FROM salary s " +
-//            "WHERE s.employee_id = #{employee_id} " +
-//            "AND YEAR(s.payment_date) = #{year} " +
-//            "AND MONTH(s.payment_date) = #{month}")
-//    SalaryDto findAttendanceByEmployeeIdAndMonth(int employee_id, int year, int month) throws DataAccessException;
-
-//    @Select("SELECT s.employee_id, s.user_name, s.department, s.position, s.daily_wage, s.additional_wage, " +
-//            "s.position_wage, s.income_tax, s.resident_tax, s.national_pension, s.health_insurance, " +
-//            "s.employ_insurance, s.tot_salary, s.tot_tribute, s.real_number, s.payment_date " +
-//            "FROM salary s " +
-//            "WHERE s.employee_id = #{employee_id} AND YEAR(s.payment_date) = #{year} AND MONTH(s.payment_date) = #{month}")
-//    SalaryDto findAttendanceByEmployeeIdAndMonth(@Param("employee_id") int employee_id,
-//                                                 @Param("year") int year,
-//                                                 @Param("month") int month);
-
     @Select("SELECT s.employee_id, s.user_name, s.department, s.position, " +
             "FORMAT(ROUND(s.daily_wage, -1), 0) AS daily_wage, " +  // 일일 급여 10의 자리 반올림 및 천 단위 포맷
             "FORMAT(ROUND(s.additional_wage, -1), 0) AS additional_wage, " +  // 추가 급여 10의 자리 반올림 및 천 단위 포맷

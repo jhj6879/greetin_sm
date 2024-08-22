@@ -30,13 +30,6 @@ public class DepartmentController {
         return "redirect:/department";
     }
 
-    // 부서 수정 처리
-    @PostMapping("/departments/update")
-    public String updateDepartment(@ModelAttribute DepartmentDto departmentDto) {
-        departmentService.updateDepartment(departmentDto);
-        return "redirect:/department";
-    }
-
     // 부서 삭제 처리
     @PostMapping("/departments/delete")
     public String deleteDepartment(@RequestParam("department") String department) {

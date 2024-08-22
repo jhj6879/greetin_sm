@@ -1,4 +1,3 @@
-
 function submitForm() {
     // 유효성 검사
     const from = document.leaveForm;
