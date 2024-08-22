@@ -20,6 +20,7 @@ public class SalaryController {
     @Autowired
     private SalaryService salaryService;
 
+    // 급여 관리 페이지
     @GetMapping("/salary")
     public String SalaryPage(@RequestParam(value = "month", required = false) Integer month,
                              @RequestParam(value = "year", required = false) Integer year,

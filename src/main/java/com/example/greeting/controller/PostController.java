@@ -165,7 +165,7 @@ public class PostController {
         return "redirect:/notice";
     }
 
-    //게시글 수정
+    //게시글 수정 페이지
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/edit/{post_no}")
     public String editForm(@PathVariable("post_no") int post_no, Model model) {
@@ -180,6 +180,7 @@ public class PostController {
         return "edit";
     }
 
+    // 게시글 수정 저장
     @PostMapping("/edit")
     public String editPost(Model model, PostDto dto) {
         dto = postService.editPost(dto);

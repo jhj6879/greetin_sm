@@ -31,6 +31,7 @@ public class IndexController {
     @Autowired
     private AttendanceService attendanceService;
 
+    // 홈 화면에서 공지사항, 휴가
     @GetMapping("/")
     public String Home(Model model){
         List<PostDto> list = postService.selectRecentPosts();
@@ -41,6 +42,7 @@ public class IndexController {
         return "/index";
     }
 
+    // 홈 화면에서 로그인 한 회원 출, 퇴근 기록 넘기기
     @GetMapping("/index")
     public ModelAndView getMemberInfo(Principal principal) {
         ModelAndView mav = new ModelAndView("index");
