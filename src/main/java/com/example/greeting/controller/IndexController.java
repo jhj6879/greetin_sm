@@ -54,11 +54,4 @@ public class IndexController {
         return mav;
     }
 
-    // 관지라 유저 모두 사용 (추후 시간 가능하면)
-    @GetMapping("/calendar")
-    public String Calendar(){
-        return "calendar";
-    }
-
-
 }
